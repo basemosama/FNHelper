@@ -8,6 +8,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.basemosama.fnhelper.Constants.Constant;
 import com.basemosama.fnhelper.R;
 import com.basemosama.fnhelper.database.CosmeticDatabase;
 import com.basemosama.fnhelper.objects.CosmeticItemsObjects.MainItem;
@@ -27,7 +29,6 @@ import java.util.List;
 
 public class GridViewWidgetFactory implements RemoteViewsService.RemoteViewsFactory {
     private Context context;
-    private List<MainItem> items=new ArrayList<>();
     private List<ItemShopItems> itemShopItems=new ArrayList<>();
 
     private int mAppWidgetId;
@@ -45,7 +46,6 @@ public class GridViewWidgetFactory implements RemoteViewsService.RemoteViewsFact
 
     @Override
     public void onDataSetChanged() {
-        items=UpdateWidgetService.getItems();
         itemShopItems=UpdateWidgetService.getItemShopItems();
 
     }
@@ -59,20 +59,16 @@ public class GridViewWidgetFactory implements RemoteViewsService.RemoteViewsFact
     public int getCount() {
 
         if(itemShopItems== null){
-            Log.i("widget13", String.valueOf(items.size()));
             return 0;}
 
-        Log.i("widget12", String.valueOf(items.size()));
         return itemShopItems.size();
 
     }
 
     @Override
     public RemoteViews getViewAt(int i) {
-       // Log.i("widget14", String.valueOf(items.size()));
 
         RemoteViews remoteViews= new RemoteViews(context.getPackageName(), R.layout.cosmetic_grid_widget_item);
-       // Picasso.get().load(items.get(i).getImages().getInformation()).into(remoteViews,R.id.cosmetic_grid_widget_image,new int[mAppWidgetId]);
         try {
             Bitmap bitmap= Picasso
                     .get()
@@ -84,6 +80,12 @@ public class GridViewWidgetFactory implements RemoteViewsService.RemoteViewsFact
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Bundle bundle=new Bundle();
+        bundle.putString(Constant.INTENT_ID_KEY,itemShopItems.get(i).getItemid());
+        Intent intent=new Intent();
+        intent.putExtras(bundle);
+        remoteViews.setOnClickFillInIntent(R.id.cosmetic_grid_widget_image,intent);
         return remoteViews;
     }
 

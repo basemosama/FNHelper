@@ -1,5 +1,6 @@
 package com.basemosama.fnhelper.appWidget;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.arch.lifecycle.LiveData;
@@ -11,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.basemosama.fnhelper.CosmeticActivity;
 import com.basemosama.fnhelper.R;
 import com.basemosama.fnhelper.database.CosmeticDatabase;
 import com.basemosama.fnhelper.objects.CosmeticItemsObjects.MainItem;
@@ -23,24 +25,24 @@ import java.util.List;
  */
 public class ItemShopWidget extends AppWidgetProvider {
 
-    private static List<MainItem> items;
 
     static void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager,
                                 final int appWidgetId) {
 
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
-        // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.item_shop_widget);
         //views.setTextViewText(R.id.appwidget_text, widgetText);
-        Intent intent=new Intent(context,GridRemoteService.class);
         UpdateWidgetService.startActionUpdateWidget(context);
+        Intent intent=new Intent(context,GridRemoteService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-
-       items=new ArrayList<>();
-
-
         views.setRemoteAdapter(R.id.appwidget_grid_view,intent);
+
+
+
+       Intent appIntent=new Intent(context, CosmeticActivity.class);
+        PendingIntent pendingIntent=PendingIntent.getActivity(context,0,appIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setPendingIntentTemplate(R.id.appwidget_grid_view,pendingIntent);
+
         views.setEmptyView(R.id.appwidget_grid_view,R.id.empty_view);
 
 

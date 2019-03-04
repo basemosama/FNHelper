@@ -8,6 +8,8 @@ public class Constant {
     public static String INTENT_ID_KEY="identifier";
     public static String INTENT_news_KEY="news";
     public static String INTENT_FAVORITE_KEY="favorite";
+    public static final String ACTION_UPDATE_WIDGET =
+            "com.basemosama.fnhelper.appWidget.update_widget";
 
 
 }

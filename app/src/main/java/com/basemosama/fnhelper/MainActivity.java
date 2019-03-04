@@ -163,12 +163,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, challengesFragment)
                     .commit();
-            case 6 :
+           /* case 6 :
                 FavoriteListFragment favoriteListFragment = new FavoriteListFragment();
                 fragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, favoriteListFragment)
                         .commit();
-            break;
+            break;*/
         }
     }
 

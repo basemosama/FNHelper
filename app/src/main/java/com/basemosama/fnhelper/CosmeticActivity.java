@@ -345,18 +345,32 @@ public class CosmeticActivity extends AppCompatActivity
                 @Override
                 public void run() {
                     cosmeticDatabase.cosmeticDao().deleteItemById(cosmeticIdentifier);
-                    Toast.makeText(getApplicationContext(),cosmeticItem.getName()+" has been removed from Favorites.",Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getBaseContext(),cosmeticItem.getName()+" has been removed from Favorites.",Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                 }
-            });
+            }
+            );
         }else{
             AppExcuters.getExcuter().getDiskIo().execute(new Runnable() {
                 @Override
                 public void run() {
                     cosmeticDatabase.cosmeticDao().insertItem(cosmeticItem);
-                    Toast.makeText(getApplicationContext(),cosmeticItem.getName()+" has been added to Favorites.",Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getBaseContext(),cosmeticItem.getName()+" has been added to Favorites.",Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
 
                 }
             });
+
 
         }
 

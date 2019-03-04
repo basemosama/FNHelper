@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/item_scroll_view"
+    android:visibility="invisible"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".CosmeticActivity"
+    tools:showIn="@layout/app_bar_cosmetic"
+    android:background="@color/darkColor"
+
+
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <include layout="@layout/text_layout"
+        android:id="@+id/text_layout"
+    />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_text"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/images"
+            android:textSize="20sp"
+            android:textColor="@color/colorAccent"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/text_layout"
+
+            />
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/images_rv"
+        android:layout_below="@id/image_text"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        />
+
+    </RelativeLayout>
+</ScrollView>

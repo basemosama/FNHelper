@@ -8,10 +8,20 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <android.support.v7.widget.RecyclerView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/cosmetis_rv"
+        android:id="@+id/fragment_container"
+        android:layout_above="@id/bottom_nav_view"
    />
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav_menu"
+        android:background="?android:windowBackground"
+        android:elevation="4dp"
+        />
 
 </RelativeLayout>

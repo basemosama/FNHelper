@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.basemosama.fnhelper">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,6 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <receiver android:name=".appWidget.ItemShopWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/item_shop_widget_info" />
+        </receiver>
+
+        <activity android:name=".NewsActivity" />
+        <activity
+            android:name=".CosmeticActivity"
+            android:label="@string/title_activity_cosmetic"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -22,6 +38,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".appWidget.GridRemoteService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            />
+        <service android:name=".appWidget.UpdateWidgetService" />
+
     </application>
 
 </manifest>

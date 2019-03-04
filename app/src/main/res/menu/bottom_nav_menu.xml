@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+>
+
+        <item
+            android:id="@+id/bottom_nav_cosmetics"
+            android:icon="@drawable/ic_face_black_24dp"
+            android:title="@string/cosmetic_items" />
+        <item
+            android:id="@+id/bottom_nav_item_shop"
+            android:icon="@drawable/ic_store_black_24dp"
+            android:title="@string/item_shop" />
+        <item
+            android:id="@+id/bottom_nav_upcoming"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/upcoming_items" />
+
+        <item
+            android:id="@+id/bottom_nav_news"
+            android:icon="@drawable/news"
+            android:title="@string/news" />
+        <item
+            android:id="@+id/bottom_nav_challenges"
+            android:icon="@drawable/challenge"
+            android:title="@string/challenges" />
+</menu>

@@ -1,4 +1,4 @@
-package com.basemosama.fnhelper.objects;
+package com.basemosama.fnhelper.objects.CosmeticItemsObjects;
 
 public class CosmeticRating {
     private double avgStars;

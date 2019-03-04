@@ -1,10 +1,9 @@
 package com.basemosama.fnhelper;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,77 +12,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.basemosama.fnhelper.Constants.Constant;
-import com.basemosama.fnhelper.adapters.CosmeticAdapter;
-import com.basemosama.fnhelper.objects.CosmeticItem;
-import com.basemosama.fnhelper.utility.CosmeticService;
+import com.basemosama.fnhelper.fragments.ChallengesFragment;
+import com.basemosama.fnhelper.fragments.CosmeticsListFragment;
+import com.basemosama.fnhelper.fragments.FavoriteListFragment;
+import com.basemosama.fnhelper.fragments.ItemShopFragment;
+import com.basemosama.fnhelper.fragments.NewsFragment;
+import com.basemosama.fnhelper.fragments.UpcomingItemsFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+    private FragmentManager fragmentManager;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
-    @BindView(R.id.cosmetis_rv) RecyclerView cosmeticsRecyclerView;
-    CosmeticAdapter cosmeticAdapter;
-    List<CosmeticItem> cosmeticItems=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ButterKnife.bind(this);
-        cosmeticAdapter=new CosmeticAdapter(this,cosmeticItems);
 
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constant.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        CosmeticService cosmeticService=retrofit.create(CosmeticService.class);
-        Call<List<CosmeticItem>> getCosmetics= cosmeticService.getCosmeticItems();
-        getCosmetics.enqueue(new Callback<List<CosmeticItem>>() {
-            @Override
-            public void onResponse(Call<List<CosmeticItem>> call, Response<List<CosmeticItem>> response) {
-                cosmeticAdapter.updateAdapter(response.body());
-                Toast.makeText(MainActivity.this, "updated",Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onFailure(Call<List<CosmeticItem>> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "error",Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-
-
-
-
-
-
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+         fragmentManager=getSupportFragmentManager();
+         if(fragmentManager.getFragments().isEmpty()) {
+             CosmeticsListFragment cosmeticsListFragment = new CosmeticsListFragment();
+             fragmentManager.beginTransaction()
+                     .add(R.id.fragment_container, cosmeticsListFragment)
+                     .commit();
+         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -91,8 +46,31 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_nav_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int id = menuItem.getItemId();
+
+                if (id == R.id.bottom_nav_cosmetics) {
+                    // Handle the camera action
+                    replaceFragment(1);
+                } else if (id == R.id.bottom_nav_item_shop) {
+                    replaceFragment(2);
+
+                } else if (id == R.id.bottom_nav_upcoming) {
+                    replaceFragment(3);
+                } else if (id == R.id.bottom_nav_news) {
+                    replaceFragment(4);
+                } else if (id == R.id.bottom_nav_challenges) {
+                    replaceFragment(5);
+                }
+                return true;
+            }
+        });
     }
 
     @Override
@@ -151,4 +129,49 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    public void replaceFragment(int whichFragment){
+        switch (whichFragment) {
+            case 1 :
+                CosmeticsListFragment cosmeticsListFragment = new CosmeticsListFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, cosmeticsListFragment)
+                        .commit();
+            break;
+            case 2 :
+                ItemShopFragment itemShopFragment = new ItemShopFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, itemShopFragment)
+                        .commit();
+                break;
+            case 3 :
+                UpcomingItemsFragment upcomingItemsFragment = new UpcomingItemsFragment();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, upcomingItemsFragment)
+                    .commit();
+            break;
+            case 4 :
+                NewsFragment newsFragment = new NewsFragment();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, newsFragment)
+                    .commit();
+
+                break;
+            case 5 :
+                ChallengesFragment challengesFragment = new ChallengesFragment();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, challengesFragment)
+                    .commit();
+            case 6 :
+                FavoriteListFragment favoriteListFragment = new FavoriteListFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, favoriteListFragment)
+                        .commit();
+            break;
+        }
+    }
+
+
+
 }

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    >
+
+
+    <ImageView android:id="@+id/item_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/placeholder1"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
+        android:contentDescription="@string/description"
+        />
+
+    <TextView android:id="@+id/item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        tools:text="name"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignParentStart="true"
+        android:visibility="gone"
+
+        />
+    <TextView android:id="@+id/item_type_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/type"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/item_name"
+        />
+    <TextView android:id="@+id/item_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="10dp"
+        tools:text="Legendary Outfit"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/item_type_text"
+        android:layout_toStartOf="@id/item_image" />
+
+    <TextView android:id="@+id/item_cost_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/cost"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/item_on_the_store"
+        />
+
+    <TextView android:id="@+id/item_cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="10dp"
+        tools:text="2000 V-bucks"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/item_cost_text"
+        android:layout_toStartOf="@id/item_image"
+
+        />
+    <TextView android:id="@+id/item_on_the_store"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/available_on_today_s_item_shop"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/item_type"
+        android:layout_toStartOf="@id/item_image"
+        />
+
+
+    <TextView android:id="@+id/item_ocurrances_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/occurrences"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:layout_below="@id/item_description"
+
+
+
+        />
+    <TextView android:id="@+id/item_ocurrances"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        tools:text="5"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@id/item_description"
+
+        android:layout_toEndOf="@id/item_ocurrances_text" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/item_ocurrances"
+        android:id="@+id/item_appearance_text_layout"
+        android:layout_marginTop="10dp"
+
+        >
+        <TextView android:id="@+id/item_release_date_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/release_date"
+            android:textSize="20sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginStart="10dp"
+            />
+
+
+        <TextView android:id="@+id/item_last_date_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/last_apperance"
+            android:textSize="20sp"
+            android:textColor="@color/colorAccent"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/item_appearance_layout"
+        android:layout_below="@id/item_appearance_text_layout"
+        android:layout_marginTop="10dp"
+
+        >
+        <TextView android:id="@+id/item_release_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            tools:text="5/11/2018"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"
+
+
+            />
+        <TextView android:id="@+id/item_last_date"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            tools:text="(3.5/5)"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"
+            />
+    </LinearLayout>
+
+
+    <TextView android:id="@+id/rating_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/rating"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/item_cost"
+        />
+
+    <TextView android:id="@+id/item_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        tools:text="(3.5/5)"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@id/item_cost"
+        android:layout_toEndOf="@id/rating_text" />
+
+    <TextView android:id="@+id/item_description_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/description"
+        android:textSize="20sp"
+        android:layout_below="@id/item_rating"
+        android:textColor="@color/colorAccent"
+
+        />
+
+    <TextView android:id="@+id/item_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="10dp"
+        tools:text="description"
+        android:textSize="20sp"
+        android:layout_below="@id/item_description_text"
+        android:textColor="@color/colorWhite"
+        />
+</RelativeLayout>

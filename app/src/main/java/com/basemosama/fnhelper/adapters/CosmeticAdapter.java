@@ -3,29 +3,31 @@ package com.basemosama.fnhelper.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.basemosama.fnhelper.R;
-import com.basemosama.fnhelper.objects.CosmeticItem;
+import com.basemosama.fnhelper.objects.CosmeticItemsObjects.MainItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class CosmeticAdapter extends RecyclerView.Adapter<CosmeticAdapter.CosmeticViewHolder> {
     private Context context;
-    private List<CosmeticItem> cosmeticItems;
+    private List<MainItem> mainItems;
+    private CosmeticItemClickListener cosmeticItemClickListener;
 
-    public CosmeticAdapter(Context context,List<CosmeticItem> cosmeticItems) {
+    public CosmeticAdapter(Context context, List<MainItem> mainItems, CosmeticItemClickListener cosmeticItemClickListener) {
         this.context = context;
-        this.cosmeticItems = cosmeticItems;
-    }
+        this.mainItems = mainItems;
+        this.cosmeticItemClickListener=cosmeticItemClickListener;
 
+    }
+    public interface CosmeticItemClickListener{
+        void onCosmeticItemClickListener(int position);
+    }
     @NonNull
     @Override
     public CosmeticViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -40,29 +42,50 @@ public class CosmeticAdapter extends RecyclerView.Adapter<CosmeticAdapter.Cosmet
 
     @Override
     public int getItemCount() {
-        if(cosmeticItems==null)
-        return 0;
-
-        return cosmeticItems.size();
+        if(mainItems ==null){
+        return 0;}
+        return mainItems.size();
     }
 
-    public void updateAdapter(List<CosmeticItem> newCosmeticItems){
-        cosmeticItems.clear();
-        cosmeticItems.addAll(newCosmeticItems);
+    public void updateAdapter(List<MainItem> newMainItems){
+        if(mainItems !=null){
+        mainItems.clear();
+        mainItems.addAll(newMainItems);}
         notifyDataSetChanged();
     }
 
-     class CosmeticViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.cosmetic_grid_image)
-        ImageView cosmeticImage;
+    public void stopLoading(){
+        Picasso.get()
+              .cancelTag("CosmeticAdapter");
+    }
+
+    class CosmeticViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private ImageView cosmeticImage;
         private CosmeticViewHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+        cosmeticImage=itemView.findViewById(R.id.cosmetic_grid_image);
+        cosmeticImage.setOnClickListener(this);
         }
         private void bind(int position){
-            String imageUrl=cosmeticItems.get(position).getImages().getInfo();
+
+            String imageUrl= mainItems.get(position).getImages().getInfo();
+            if(TextUtils.isEmpty(imageUrl)){
+                imageUrl=mainItems.get(position).getImages().getInformation();
+            }
+            //Log.i("itemShopImage",imageUrl);
             Picasso.get().load(imageUrl)
+                    .resize(500,500)
+                    .tag("CosmeticAdapter")
+                    .placeholder(R.drawable.placeholder1)
+                    .error(R.drawable.placeholder1)
                     .into(cosmeticImage);
         }
-    }
+
+         @Override
+         public void onClick(View view) {
+             cosmeticItemClickListener.onCosmeticItemClickListener(getAdapterPosition());
+         }
+     }
+
+
 }

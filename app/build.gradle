@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 28
@@ -25,16 +26,24 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:animated-vector-drawable:28.0.0'
+    implementation 'com.android.support:customtabs:28.0.0'
     implementation 'com.android.support:exifinterface:28.0.0'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    //retrofit & Gson
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+    //room & liveData & viewModel
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     implementation "android.arch.lifecycle:runtime:$lifecycle_version"
+    //firebase
+    implementation 'com.google.firebase:firebase-core:16.0.7'
+    implementation 'com.google.firebase:firebase-ads:17.1.3'
+    implementation 'com.google.firebase:firebase-crash:16.2.1'
 
 
     implementation 'com.android.support:support-v4:28.0.0'

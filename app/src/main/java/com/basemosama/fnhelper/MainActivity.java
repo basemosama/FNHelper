@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.basemosama.fnhelper.fragments.ChallengesFragment;
 import com.basemosama.fnhelper.fragments.CosmeticsListFragment;
@@ -19,11 +20,16 @@ import com.basemosama.fnhelper.fragments.FavoriteListFragment;
 import com.basemosama.fnhelper.fragments.ItemShopFragment;
 import com.basemosama.fnhelper.fragments.NewsFragment;
 import com.basemosama.fnhelper.fragments.UpcomingItemsFragment;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FragmentManager fragmentManager;
-
+    private AdView mAdView;
+    private FirebaseAnalytics mFirebaseAnalytics;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +37,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
          fragmentManager=getSupportFragmentManager();
          if(fragmentManager.getFragments().isEmpty()) {
@@ -39,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                      .add(R.id.fragment_container, cosmeticsListFragment)
                      .commit();
          }
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

@@ -29,5 +29,17 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="credits">Developed By :</string>
+    <string name="developer_name">Basem Osama</string>
+    <string name="epic_games_credits">We are not affiliated Epic Games \n
+        our content is not official or endorsed by Epic Games in any way. \n
+     Fortnite is copyright by Epic Games and is not affiliated with this app.</string>
+    <string name="share">Share</string>
+    <string name="removed_from_favorites">&#160; has been removed from Favorites.</string>
+    <string name="added_to_favorites">&#160; has been added to Favorites.</string>
+    <string name="week">Week</string>
+    <string name="retrofit_error_message">Sorry there was an error , Try again Later</string>
+    <string name="no_internet_message">Sorry , There is no Intenet available , Please try again later</string>
+    <string name="item_shop_scroll_message">Scroll To the End of the Item Shop to show all items</string>
 
 </resources>

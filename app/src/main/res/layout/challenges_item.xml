@@ -5,8 +5,11 @@
     android:layout_height="wrap_content"
     android:background="#fff"
     android:elevation="4dp"
-    android:layout_margin="5dp"
-    app:cardCornerRadius="2dp">
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    app:cardCornerRadius="2dp"
+    app:cardBackgroundColor="@color/darkColor"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +23,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/challenge_name"
         android:textSize="25sp"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorWhite"
         android:layout_margin="10dp"
        android:layout_centerVertical="true"
         />
@@ -29,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/challenge_scroll_image"
-        android:src="@drawable/arrow_down_black"
+        android:src="@drawable/arrow_down"
         android:layout_marginEnd="20dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -37,6 +40,16 @@
         android:layout_marginRight="20dp" />
     
 </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/challenge_not_available"
+            android:text="These Challenges isn't available yet ."
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="10dp"
+            android:layout_centerVertical="true"
+            android:visibility="gone"/>
         <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,5 +57,6 @@
         android:layout_margin="5dp"
             android:visibility="gone"
         />
+
     </LinearLayout>
 </android.support.v7.widget.CardView>

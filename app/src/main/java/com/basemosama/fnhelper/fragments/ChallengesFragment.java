@@ -13,11 +13,15 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.basemosama.fnhelper.Constants.Constant;
+import com.basemosama.fnhelper.Constants.Functions;
 import com.basemosama.fnhelper.R;
 import com.basemosama.fnhelper.adapters.ChallengesAdapter;
 import com.basemosama.fnhelper.objects.ChallengesObjects.Challenges;
 import com.basemosama.fnhelper.objects.ChallengesObjects.SeasonChallenges;
+import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShopItems;
 import com.basemosama.fnhelper.utility.CosmeticService;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,11 +29,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ChallengesFragment extends Fragment implements ChallengesAdapter.WeekChallengeClickListener {
+public class ChallengesFragment extends Fragment {
     private RecyclerView challengesRecyclerView;
     private ChallengesAdapter challengesAdapter;
     private Call<Challenges> getChallenges;
-    private SeasonChallenges seasonChallenges;
+    private SeasonChallenges seasonChallenges=new SeasonChallenges();
 
     public ChallengesFragment() {
     }
@@ -39,10 +43,22 @@ public class ChallengesFragment extends Fragment implements ChallengesAdapter.We
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.challenges_fragment,container,false);
         challengesRecyclerView =view.findViewById(R.id.challenges_rv);
-        LinearLayoutManager gridLayoutManager=new LinearLayoutManager(getContext());
-        challengesRecyclerView.setLayoutManager(gridLayoutManager);
-        getChallenges();
+        if(savedInstanceState!=null){
+            seasonChallenges=savedInstanceState.getParcelable(Constant.CHALLENGES_BUNDLE_KEY);
+        }
 
+        challengesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        challengesAdapter =new ChallengesAdapter(getContext(), seasonChallenges);
+
+        challengesRecyclerView.setAdapter(challengesAdapter);
+
+        if(savedInstanceState == null && getContext()!=null) {
+            if (Functions.isNetworkAvailable(getContext())) {
+                getChallenges();
+            } else {
+                Toast.makeText(getContext(), getString(R.string.no_internet_message), Toast.LENGTH_SHORT).show();
+            }
+        }
         return view;
     }
 
@@ -59,14 +75,15 @@ public class ChallengesFragment extends Fragment implements ChallengesAdapter.We
                 if (response.body() != null) {
 
                      seasonChallenges =response.body().getChallenges();
-                    challengesAdapter =new ChallengesAdapter(getContext(), seasonChallenges,ChallengesFragment.this);
-                    challengesRecyclerView.setAdapter(challengesAdapter);
+                     challengesAdapter.updateAdapter(seasonChallenges);
                 }
             }
 
             @Override
             public void onFailure(Call<Challenges> call, Throwable t) {
-                Log.i("itemShop", t.getLocalizedMessage());
+                Log.i(getClass().getName(),t.getLocalizedMessage());
+                Toast.makeText(getContext(), R.string.retrofit_error_message,Toast.LENGTH_SHORT).show();
+
 
             }
         });
@@ -83,8 +100,8 @@ public class ChallengesFragment extends Fragment implements ChallengesAdapter.We
     }
 
     @Override
-    public void onWeekChallengeClickListener(int position) {
-
-        Toast.makeText(getContext(),seasonChallenges.getWeekChallenges().get(position).get(position).getChallenge(),Toast.LENGTH_SHORT);
+    public void onSaveInstanceState(@NonNull Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putParcelable(Constant.CHALLENGES_BUNDLE_KEY,seasonChallenges);
     }
 }

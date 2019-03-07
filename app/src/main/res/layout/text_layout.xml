@@ -205,8 +205,10 @@
         tools:text="(3.5/5)"
         android:textSize="20sp"
         android:textColor="@color/colorWhite"
-        android:layout_below="@id/item_cost"
-        android:layout_toEndOf="@id/rating_text" />
+        android:layout_below="@id/rating_text"
+        android:layout_alignParentStart="true"
+
+        />
 
     <TextView android:id="@+id/item_description_text"
         android:layout_width="wrap_content"

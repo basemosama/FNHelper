@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.basemosama.fnhelper.Constants.Constant;
+import com.basemosama.fnhelper.Constants.Functions;
 import com.basemosama.fnhelper.NewsActivity;
 import com.basemosama.fnhelper.R;
 import com.basemosama.fnhelper.adapters.NewsAdapter;
@@ -33,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NewsFragment extends Fragment implements NewsAdapter.NewsItemClickListener {
     private RecyclerView newsRecyclerView;
     private NewsAdapter newsAdapter;
-    private List<NewsEntries> news =new ArrayList<>();
+    private ArrayList<NewsEntries> news =new ArrayList<>();
     private Call<News> getNews;
 
     public NewsFragment() {
@@ -44,12 +45,25 @@ public class NewsFragment extends Fragment implements NewsAdapter.NewsItemClickL
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.news_fragment,container,false);
         newsRecyclerView =view.findViewById(R.id.news_rv);
-        GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),1);
+        int noOfColumns=1;
+        if(getContext()!=null){
+            noOfColumns=getContext().getResources().getInteger(R.integer.no_of_news_columns);
+        }
+        if(savedInstanceState!=null){
+            news=savedInstanceState.getParcelableArrayList(Constant.NEWS_BUNDLE_KEY);
+        }
+
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),noOfColumns);
         newsRecyclerView.setLayoutManager(gridLayoutManager);
         newsAdapter =new NewsAdapter(getContext(), news,this);
         newsRecyclerView.setAdapter(newsAdapter);
-        getNewsItems();
-
+        if(savedInstanceState == null && getContext()!=null) {
+            if (Functions.isNetworkAvailable(getContext())) {
+                getNewsItems();
+            } else {
+                Toast.makeText(getContext(), getString(R.string.no_internet_message), Toast.LENGTH_SHORT).show();
+            }
+        }
         return view;
     }
 
@@ -72,7 +86,8 @@ public class NewsFragment extends Fragment implements NewsAdapter.NewsItemClickL
 
             @Override
             public void onFailure(Call<News> call, Throwable t) {
-                Log.i("myretrofit",t.getLocalizedMessage());
+                Log.i(getClass().getName(),t.getLocalizedMessage());
+                Toast.makeText(getContext(), R.string.retrofit_error_message,Toast.LENGTH_SHORT).show();
 
 
             }
@@ -96,5 +111,11 @@ public class NewsFragment extends Fragment implements NewsAdapter.NewsItemClickL
         Intent intent=new Intent(getContext(), NewsActivity.class);
         intent.putExtra(Constant.INTENT_news_KEY,news.get(position));
         startActivity(intent);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putParcelableArrayList(Constant.NEWS_BUNDLE_KEY,news);
     }
 }

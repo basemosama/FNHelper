@@ -56,7 +56,7 @@ public class CosmeticAdapter extends RecyclerView.Adapter<CosmeticAdapter.Cosmet
 
     public void stopLoading(){
         Picasso.get()
-              .cancelTag("CosmeticAdapter");
+              .cancelTag(CosmeticAdapter.class.getName());
     }
 
     class CosmeticViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -72,10 +72,9 @@ public class CosmeticAdapter extends RecyclerView.Adapter<CosmeticAdapter.Cosmet
             if(TextUtils.isEmpty(imageUrl)){
                 imageUrl=mainItems.get(position).getImages().getInformation();
             }
-            //Log.i("itemShopImage",imageUrl);
             Picasso.get().load(imageUrl)
-                    .resize(500,500)
-                    .tag("CosmeticAdapter")
+                    .fit()
+                    .tag(CosmeticAdapter.class.getName())
                     .placeholder(R.drawable.placeholder1)
                     .error(R.drawable.placeholder1)
                     .into(cosmeticImage);

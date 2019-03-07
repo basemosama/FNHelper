@@ -23,12 +23,13 @@ import com.basemosama.fnhelper.database.MainViewModel;
 import com.basemosama.fnhelper.objects.CosmeticItemsObjects.MainItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FavoriteListFragment extends Fragment implements CosmeticAdapter.CosmeticItemClickListener {
     private RecyclerView favoritesRecyclerView;
     private CosmeticAdapter cosmeticAdapter;
-    private List<MainItem> favoriteList =new ArrayList<>();
+    private ArrayList<MainItem> favoriteList =new ArrayList<>();
 
     public FavoriteListFragment() {
     }
@@ -38,10 +39,19 @@ public class FavoriteListFragment extends Fragment implements CosmeticAdapter.Co
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.favorites_fragment,container,false);
         favoritesRecyclerView =view.findViewById(R.id.favorite_list_rv);
-        GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),2);
+        int noOfColumns=2;
+        if(getContext()!=null){
+            noOfColumns=getContext().getResources().getInteger(R.integer.no_of_columns);
+        }
+        if(savedInstanceState!=null){
+            favoriteList=savedInstanceState.getParcelableArrayList(Constant.FAVORITE_ITEMS_BUNDLE_KEY);
+        }
+
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),noOfColumns);
         favoritesRecyclerView.setLayoutManager(gridLayoutManager);
         cosmeticAdapter=new CosmeticAdapter(getContext(), favoriteList,this);
         favoritesRecyclerView.setAdapter(cosmeticAdapter);
+        if(savedInstanceState==null)
         getFavorites();
 
         return view;
@@ -53,8 +63,6 @@ public class FavoriteListFragment extends Fragment implements CosmeticAdapter.Co
         mainViewModel.getFavorites().observe(this, new Observer<List<MainItem>>() {
             @Override
             public void onChanged(@Nullable List<MainItem> mainItems) {
-                Log.i("favoritelist","changing");
-                Log.i("favoritelist", String.valueOf(mainItems.size()));
 
                 cosmeticAdapter.updateAdapter(mainItems);
 
@@ -80,5 +88,11 @@ public class FavoriteListFragment extends Fragment implements CosmeticAdapter.Co
         super.onDestroyView();
         cosmeticAdapter.stopLoading();
         favoritesRecyclerView.setAdapter(null);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putParcelableArrayList(Constant.FAVORITE_ITEMS_BUNDLE_KEY,favoriteList);
     }
 }

@@ -1,6 +1,7 @@
 package com.basemosama.fnhelper.fragments;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import com.basemosama.fnhelper.Constants.Constant;
+import com.basemosama.fnhelper.Constants.Functions;
 import com.basemosama.fnhelper.CosmeticActivity;
 import com.basemosama.fnhelper.R;
 import com.basemosama.fnhelper.adapters.CosmeticAdapter;
@@ -29,8 +31,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CosmeticsListFragment extends Fragment implements CosmeticAdapter.CosmeticItemClickListener {
     private RecyclerView cosmeticsRecyclerView;
     private CosmeticAdapter cosmeticAdapter;
-    private List<MainItem> mainItems =new ArrayList<>();
-    private Call<List<MainItem>> getCosmetics;
+    private ArrayList<MainItem> mainItems =new ArrayList<>();
+    private Call<ArrayList<MainItem>> getCosmetics;
 
     public CosmeticsListFragment() {
     }
@@ -40,12 +42,25 @@ public class CosmeticsListFragment extends Fragment implements CosmeticAdapter.C
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.cosmetic_list_fragment,container,false);
         cosmeticsRecyclerView=view.findViewById(R.id.cosmetis_list_rv);
-        GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),2);
-        cosmeticsRecyclerView.setLayoutManager(gridLayoutManager);
+        int noOfColumns=2;
+        if(getContext()!=null){
+            noOfColumns=getContext().getResources().getInteger(R.integer.no_of_columns);
+        }
+        if(savedInstanceState!=null){
+            mainItems=savedInstanceState.getParcelableArrayList(Constant.COSAMETIC_ITEMS_BUNDLE_KEY);
+        }
+
+        cosmeticsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),noOfColumns));
         cosmeticAdapter=new CosmeticAdapter(getContext(), mainItems,this);
         cosmeticsRecyclerView.setAdapter(cosmeticAdapter);
 
-        getCosmeticItems();
+        if(savedInstanceState ==null && getContext()!=null){
+        if(Functions.isNetworkAvailable(getContext())) {
+            getCosmeticItems();
+        }else{
+            Toast.makeText(getContext(),getString(R.string.no_internet_message),Toast.LENGTH_SHORT).show();
+        }
+        }
 
         return view;
     }
@@ -57,9 +72,9 @@ public class CosmeticsListFragment extends Fragment implements CosmeticAdapter.C
                 .build();
         CosmeticService cosmeticService=retrofit.create(CosmeticService.class);
         getCosmetics= cosmeticService.getCosmeticItems();
-        getCosmetics.enqueue(new Callback<List<MainItem>>() {
+        getCosmetics.enqueue(new Callback<ArrayList<MainItem>>() {
             @Override
-            public void onResponse(Call<List<MainItem>> call, Response<List<MainItem>> response) {
+            public void onResponse(Call<ArrayList<MainItem>> call, Response<ArrayList<MainItem>> response) {
                 if(response.body()!=null) {
                     mainItems = response.body();
                     cosmeticAdapter.updateAdapter(mainItems);
@@ -68,8 +83,10 @@ public class CosmeticsListFragment extends Fragment implements CosmeticAdapter.C
             }
 
             @Override
-            public void onFailure(Call<List<MainItem>> call, Throwable t) {
-                Log.i("myretrofit",t.getLocalizedMessage());
+            public void onFailure(Call<ArrayList<MainItem>> call, Throwable t) {
+                Log.i(getClass().getName(),t.getLocalizedMessage());
+                if(getContext()!=null)
+                Toast.makeText(getContext(), R.string.retrofit_error_message,Toast.LENGTH_SHORT).show();
 
 
             }
@@ -93,8 +110,15 @@ public class CosmeticsListFragment extends Fragment implements CosmeticAdapter.C
         if(getCosmetics!=null){
             getCosmetics.cancel();
         }
-        Toast.makeText(getContext(),"destroying",Toast.LENGTH_SHORT).show();
         cosmeticAdapter.stopLoading();
         cosmeticsRecyclerView.setAdapter(null);
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putParcelableArrayList(Constant.COSAMETIC_ITEMS_BUNDLE_KEY,mainItems);
+    }
+
+
 }

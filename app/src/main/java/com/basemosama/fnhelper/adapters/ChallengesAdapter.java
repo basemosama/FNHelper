@@ -20,16 +20,11 @@ import java.util.List;
 public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.ChallengesViewHolder> {
     private Context context;
     private SeasonChallenges challenges;
-    private WeekChallengeClickListener weekChallengeClickListener;
     private boolean isVisible=false;
-    public ChallengesAdapter(Context context, SeasonChallenges challenges, WeekChallengeClickListener weekChallengeClickListener) {
+    public ChallengesAdapter(Context context, SeasonChallenges challenges) {
         this.context = context;
         this.challenges = challenges;
-        this.weekChallengeClickListener = weekChallengeClickListener;
 
-    }
-    public interface WeekChallengeClickListener {
-        void onWeekChallengeClickListener(int position);
     }
     @NonNull
     @Override
@@ -45,7 +40,6 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.Ch
 
     @Override
     public int getItemCount() {
-
         if(challenges==null){
         return 0;}
         return challenges.getWeekChallenges().size();
@@ -60,6 +54,7 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.Ch
 
      class ChallengesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener , WeekChallengeAdapter.ChallengeClickListener {
         private TextView challengeName;
+        private TextView notAvailableChallenge;
         private RecyclerView weekChallengeRecyclerView;
         ImageView arrowImage;
         private ChallengesViewHolder(@NonNull View itemView) {
@@ -67,41 +62,48 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.Ch
 
         challengeName=itemView.findViewById(R.id.challenge_name);
         weekChallengeRecyclerView=itemView.findViewById(R.id.week_rv);
+            notAvailableChallenge=itemView.findViewById(R.id.challenge_not_available);
              arrowImage = itemView.findViewById(R.id.challenge_scroll_image);
             LinearLayoutManager linearLayoutManager=new LinearLayoutManager(context);
             weekChallengeRecyclerView.setLayoutManager(linearLayoutManager);
         itemView.setOnClickListener(this);
+
         }
         private void bind(int position){
+
             int weekNumber=position+1;
-            String name ="week "+weekNumber;
+            String name =context.getString(R.string.week)+weekNumber;
             challengeName.setText(name);
            List<WeekChallenges> weekChallenges=challenges.getWeekChallenges().get(position);
             WeekChallengeAdapter weekChallengeAdapter=new WeekChallengeAdapter(context,weekChallenges,this);
             weekChallengeRecyclerView.setAdapter(weekChallengeAdapter);
+
         }
 
 
          @Override
          public void onClick(View view) {
-         //   weekChallengeClickListener.onWeekChallengeClickListener(getAdapterPosition());
-
 
              if(isVisible){
                  weekChallengeRecyclerView.setVisibility(View.GONE);
-                 arrowImage.setImageResource(R.drawable.arrow_down_black);
+                 notAvailableChallenge.setVisibility(View.GONE);
+                 arrowImage.setImageResource(R.drawable.arrow_down);
                  isVisible=false;
              }else {
                  weekChallengeRecyclerView.setVisibility(View.VISIBLE);
-                 arrowImage.setImageResource(R.drawable.arrow_up_black);
+                 arrowImage.setImageResource(R.drawable.arrow_up);
+                 if(challenges.getWeekChallenges().get(getAdapterPosition()).size()==0)
+                     notAvailableChallenge.setVisibility(View.VISIBLE);
+
                  isVisible=true;
              }
          }
 
          @Override
          public void onChallengeClickListener(int position) {
-            weekChallengeClickListener.onWeekChallengeClickListener(position);
-             Toast.makeText(context,challenges.getWeekChallenges().get(getAdapterPosition()).get(position).getChallenge(),Toast.LENGTH_SHORT).show();
+            String challengeText=challenges.getWeekChallenges().get(getAdapterPosition()).get(position).getChallenge()+" "
+                    +challenges.getWeekChallenges().get(getAdapterPosition()).get(position).getTotal()+" times";
+             Toast.makeText(context,challengeText,Toast.LENGTH_SHORT).show();
          }
      }
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.basemosama.fnhelper.R;
+import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShop;
 import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShopItems;
 import com.squareup.picasso.Picasso;
 
@@ -45,8 +46,6 @@ public class ItemShopAdapter extends RecyclerView.Adapter<ItemShopAdapter.ItemSh
     public int getItemCount() {
         if(itemShopItems ==null){
         return 0;}
-
-        Log.i("myretrofit", String.valueOf(itemShopItems.size()));
         return itemShopItems.size();
     }
 
@@ -58,7 +57,7 @@ public class ItemShopAdapter extends RecyclerView.Adapter<ItemShopAdapter.ItemSh
 
     public void stopLoading(){
         Picasso.get()
-                .cancelTag("ItemShop");
+                .cancelTag(ItemShopAdapter.class.getName());
     }
 
      class ItemShopViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener{
@@ -74,7 +73,7 @@ public class ItemShopAdapter extends RecyclerView.Adapter<ItemShopAdapter.ItemSh
             String imageUrl= itemShopItems.get(position).getItem().getImages().getInformation();
             Picasso.get().load(imageUrl)
                     .fit()
-                    .tag("ItemShop")
+                    .tag(ItemShopAdapter.class.getName())
                     .placeholder(R.drawable.placeholder1)
                     .into(cosmeticImage);
         }

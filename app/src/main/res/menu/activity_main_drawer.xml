@@ -5,34 +5,40 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_main"
+            android:icon="@drawable/ic_face_black_24dp"
+            android:title="@string/cosmetic_items" />
+          <item
+        android:id="@+id/nav_item_shop"
+        android:icon="@drawable/ic_store_black_24dp"
+        android:title="@string/item_shop" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_upcoming"
+            android:icon="@drawable/upcoming"
+            android:title="@string/upcoming_items" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_favorites"
+            android:icon="@drawable/favorite_black"
+            android:title="@string/favorites" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_news"
+            android:icon="@drawable/news"
+            android:title="@string/news" />
+        <item
+            android:id="@+id/nav_challenges"
+            android:icon="@drawable/challenge"
+            android:title="@string/challenges" />
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_menu_share"
+            android:title="@string/share" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
+<group
+    android:checkableBehavior="none"
+    >
+    <item android:title="Not affiliated with Epic Games"
+        android:icon="@drawable/ic_about">
     </item>
-
+</group>
 </menu>

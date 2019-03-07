@@ -49,10 +49,6 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesView
         notifyDataSetChanged();
     }
 
-    public void stopLoading(){
-        Picasso.get()
-              .cancelTag("CosmeticAdapter");
-    }
 
     class ImagesViewHolder extends RecyclerView.ViewHolder  {
         private ImageView cosmeticImage;
@@ -62,10 +58,8 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesView
         }
         private void bind(int position){
             String imageUrl=images.get(position);
-            //Log.i("itemShopImage",imageUrl);
             Picasso.get().load(imageUrl)
-                    .resize(500,500)
-                    .tag("CosmeticAdapter")
+                    .fit()
                     .placeholder(R.drawable.placeholder1)
                     .into(cosmeticImage);
         }

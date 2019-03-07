@@ -1,9 +1,12 @@
 package com.basemosama.fnhelper.objects.ChallengesObjects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeasonChallenges {
+public class SeasonChallenges implements Parcelable {
     private List<WeekChallenges> week1 ;
     private List<WeekChallenges> week2 ;
     private List<WeekChallenges> week3 ;
@@ -30,6 +33,21 @@ public class SeasonChallenges {
         this.week10 = week10;
     }
 
+
+    protected SeasonChallenges(Parcel in) {
+    }
+
+    public static final Creator<SeasonChallenges> CREATOR = new Creator<SeasonChallenges>() {
+        @Override
+        public SeasonChallenges createFromParcel(Parcel in) {
+            return new SeasonChallenges(in);
+        }
+
+        @Override
+        public SeasonChallenges[] newArray(int size) {
+            return new SeasonChallenges[size];
+        }
+    };
 
     public List<WeekChallenges> getWeek1() {
         return week1;
@@ -87,5 +105,14 @@ public class SeasonChallenges {
     }
 
     public SeasonChallenges() {
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
     }
 }

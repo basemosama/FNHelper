@@ -1,9 +1,12 @@
 package com.basemosama.fnhelper.objects.ItemShopObjects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.basemosama.fnhelper.objects.CosmeticItemsObjects.CosmeticRating;
 import com.basemosama.fnhelper.objects.ImagesObjects.ItemImages;
 
-public class ItemShopItems {
+public class ItemShopItems implements Parcelable {
     private String itemid;
     private String name;
     private String cost;
@@ -35,6 +38,32 @@ public class ItemShopItems {
         this.obtained_type = obtained_type;
         this.ratings = ratings;
     }
+
+    protected ItemShopItems(Parcel in) {
+        itemid = in.readString();
+        name = in.readString();
+        cost = in.readString();
+        featured = in.readInt();
+        refundable = in.readInt();
+        lastupdate = in.readLong();
+        youtube = in.readString();
+        captial = in.readString();
+        type = in.readString();
+        rarity = in.readString();
+        obtained_type = in.readString();
+    }
+
+    public static final Creator<ItemShopItems> CREATOR = new Creator<ItemShopItems>() {
+        @Override
+        public ItemShopItems createFromParcel(Parcel in) {
+            return new ItemShopItems(in);
+        }
+
+        @Override
+        public ItemShopItems[] newArray(int size) {
+            return new ItemShopItems[size];
+        }
+    };
 
     public void setItemid(String itemid) {
         this.itemid = itemid;
@@ -139,5 +168,25 @@ public class ItemShopItems {
 
     public ItemImages getItem() {
         return item;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(itemid);
+        parcel.writeString(name);
+        parcel.writeString(cost);
+        parcel.writeInt(featured);
+        parcel.writeInt(refundable);
+        parcel.writeLong(lastupdate);
+        parcel.writeString(youtube);
+        parcel.writeString(captial);
+        parcel.writeString(type);
+        parcel.writeString(rarity);
+        parcel.writeString(obtained_type);
     }
 }

@@ -67,7 +67,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         private void bind(int position){
             newsTitle.setText(newsEntries.get(position).getTitle());
             String imageUrl= newsEntries.get(position).getImage();
-            //Log.i("itemShopImage",imageUrl);
             Picasso.get().load(imageUrl)
                     .placeholder(R.drawable.placeholder1)
                     .fit()

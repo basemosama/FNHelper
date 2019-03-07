@@ -6,6 +6,7 @@ import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShop;
 import com.basemosama.fnhelper.objects.NewsObjects.News;
 import com.basemosama.fnhelper.objects.ItemShopObjects.UpcomingItems;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -15,7 +16,7 @@ import retrofit2.http.Query;
 public interface CosmeticService {
 
     @GET("items/list")
-    Call<List<MainItem>>getCosmeticItems();
+    Call<ArrayList<MainItem>>getCosmeticItems();
 
     @GET("store/get?language=en")
     Call<ItemShop>getItemShop();

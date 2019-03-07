@@ -1,13 +1,16 @@
 package com.basemosama.fnhelper.objects.NewsObjects;
 
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class News {
+public class News  {
     private String type;
     private String typesm;
-    private List<NewsEntries> entries;
+    private ArrayList<NewsEntries> entries;
 
-    public News(String type, String typesm, List<NewsEntries> entries) {
+    public News(String type, String typesm, ArrayList<NewsEntries> entries) {
         this.type = type;
         this.typesm = typesm;
         this.entries = entries;
@@ -21,7 +24,7 @@ public class News {
         return typesm;
     }
 
-    public List<NewsEntries> getEntries() {
+    public ArrayList<NewsEntries> getEntries() {
         return entries;
     }
 }

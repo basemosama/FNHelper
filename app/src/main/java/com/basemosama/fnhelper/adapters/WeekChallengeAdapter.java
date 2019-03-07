@@ -70,13 +70,9 @@ public class WeekChallengeAdapter extends RecyclerView.Adapter<WeekChallengeAdap
             challenge.setText(challenges.get(position).getChallenge());
             String totalNumber="( "+String.valueOf(challenges.get(position).getTotal())+" )";
             String stars=String.valueOf(challenges.get(position).getStars());
-            Log.i("totlNumber",totalNumber);
             challengeTotal.setText(totalNumber);
             challengeStars.setText(stars);
-       //     String imageUrl= challenges.get(position).getImages().getInfo();
-            //Log.i("itemShopImage",imageUrl);
-          //  Picasso.get().load(imageUrl)
-            //        .into(cosmeticImage);
+
         }
 
          @Override

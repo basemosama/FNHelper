@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 
 import com.basemosama.fnhelper.Constants.Constant;
 import com.basemosama.fnhelper.R;
+import com.basemosama.fnhelper.adapters.ItemShopAdapter;
 import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShop;
 import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShopItems;
 import com.basemosama.fnhelper.utility.CosmeticService;

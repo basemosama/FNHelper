@@ -2,14 +2,15 @@ package com.basemosama.fnhelper.objects.ItemShopObjects;
 
 import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShopItems;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UpcomingItems {
     private int rows;
     private String vbucks;
-    private List<ItemShopItems> items;
+    private ArrayList<ItemShopItems> items;
 
-    public UpcomingItems(int rows, String vbucks, List<ItemShopItems> items) {
+    public UpcomingItems(int rows, String vbucks, ArrayList<ItemShopItems> items) {
         this.rows = rows;
         this.vbucks = vbucks;
         this.items = items;
@@ -23,7 +24,7 @@ public class UpcomingItems {
         return vbucks;
     }
 
-    public List<ItemShopItems> getItems() {
+    public ArrayList<ItemShopItems> getItems() {
         return items;
     }
 }

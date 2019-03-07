@@ -1,5 +1,6 @@
 package com.basemosama.fnhelper.objects.ItemShopObjects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemShop {
@@ -9,10 +10,10 @@ public class ItemShop {
     private String date;
     private int rows;
     private String vbucks;
-    private List<ItemShopItems> items;
+    private ArrayList<ItemShopItems> items;
 
     public ItemShop(String date_layout, long lastupdate, String language, String date,
-                    int rows, String vbucks, List<ItemShopItems> items) {
+                    int rows, String vbucks, ArrayList<ItemShopItems> items) {
         this.date_layout = date_layout;
         this.lastupdate = lastupdate;
         this.language = language;
@@ -70,11 +71,11 @@ public class ItemShop {
         this.vbucks = vbucks;
     }
 
-    public List<ItemShopItems> getItems() {
+    public ArrayList<ItemShopItems> getItems() {
         return items;
     }
 
-    public void setItems(List<ItemShopItems> items) {
+    public void setItems(ArrayList<ItemShopItems> items) {
         this.items = items;
     }
 }

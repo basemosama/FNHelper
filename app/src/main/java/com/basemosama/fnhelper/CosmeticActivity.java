@@ -63,11 +63,11 @@ public class CosmeticActivity extends AppCompatActivity
     private List<String> images;
     RecyclerView imagesRecyclerView;
     ImagesAdapter imagesAdapter;
-    private Toolbar toolbar;
     CosmeticDatabase cosmeticDatabase;
     LiveData<Boolean> favoriteLiveData;
     boolean isInFavourite=false;
     private MenuItem favroiteItem;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,19 +121,9 @@ public class CosmeticActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
+        Intent intent =new Intent(this,MainActivity.class);
+        intent.putExtra("id",id);
+        startActivity(intent);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -207,13 +197,6 @@ public class CosmeticActivity extends AppCompatActivity
             cost="Not available yet";
            releaseDate= lastDate = occurances="None";
 
-         /*   itemOccurances.setVisibility(View.GONE);
-            itemLastDate.setVisibility(View.GONE);
-            itemReleaseDate.setVisibility(View.GONE);
-            itemLastDateText.setVisibility(View.GONE);
-            itemLastDateText.setVisibility(View.GONE);
-            itemOccurancesText.setVisibility(View.GONE);*/
-
         }
         type=upcomingText +cosmeticItem.getRarity() + " "+cosmeticItem.getType();
 
@@ -248,10 +231,10 @@ public class CosmeticActivity extends AppCompatActivity
 
         Picasso.get()
                 .load(imageUrl)
+                .fit()
                 .placeholder(R.drawable.placeholder1)
                 .into(itemImage);
 
-        //itemName.setText(cosmeticItem.getName());
         setTitle(cosmeticItem.getName());
         itemDescription.setText(description);
         itemType.setText(type);
@@ -267,7 +250,7 @@ public class CosmeticActivity extends AppCompatActivity
 
     }
     private void setUpUi(){
-         toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         itemImage=findViewById(R.id.item_image);
         itemName=findViewById(R.id.item_name);
@@ -296,7 +279,7 @@ public class CosmeticActivity extends AppCompatActivity
 
 
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -348,7 +331,7 @@ public class CosmeticActivity extends AppCompatActivity
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getBaseContext(),cosmeticItem.getName()+" has been removed from Favorites.",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(),cosmeticItem.getName()+getString(R.string.removed_from_favorites),Toast.LENGTH_SHORT).show();
 
                         }
                     });
@@ -363,7 +346,7 @@ public class CosmeticActivity extends AppCompatActivity
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getBaseContext(),cosmeticItem.getName()+" has been added to Favorites.",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(),cosmeticItem.getName()+getString(R.string.added_to_favorites),Toast.LENGTH_SHORT).show();
 
                         }
                     });

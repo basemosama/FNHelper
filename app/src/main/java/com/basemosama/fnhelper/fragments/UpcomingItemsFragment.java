@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.basemosama.fnhelper.Constants.Constant;
+import com.basemosama.fnhelper.Constants.Functions;
 import com.basemosama.fnhelper.CosmeticActivity;
 import com.basemosama.fnhelper.R;
 import com.basemosama.fnhelper.adapters.ItemShopAdapter;
@@ -33,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UpcomingItemsFragment extends Fragment implements ItemShopAdapter.ItemShopClickListener {
     private RecyclerView upcomingItemsRecyclerView;
     private ItemShopAdapter upcomingItemsAdapter;
-    private List<ItemShopItems> upcomingItems =new ArrayList<>();
+    private ArrayList<ItemShopItems> upcomingItems =new ArrayList<>();
     private Call<UpcomingItems> getUpcomingItems;
 
     public UpcomingItemsFragment() {
@@ -44,12 +45,25 @@ public class UpcomingItemsFragment extends Fragment implements ItemShopAdapter.I
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.item_shop_fragment,container,false);
         upcomingItemsRecyclerView =view.findViewById(R.id.item_shop_rv);
-        GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),2);
+        int noOfColumns=2;
+        if(getContext()!=null){
+            noOfColumns=getContext().getResources().getInteger(R.integer.no_of_columns);
+        }
+
+        if(savedInstanceState!=null){
+            upcomingItems=savedInstanceState.getParcelableArrayList(Constant.UPCOMING_ITEMS_BUNDLE_KEY);
+        }
+
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),noOfColumns);
         upcomingItemsRecyclerView.setLayoutManager(gridLayoutManager);
         upcomingItemsAdapter =new ItemShopAdapter(getContext(), upcomingItems,this);
         upcomingItemsRecyclerView.setAdapter(upcomingItemsAdapter);
-        getItemShop();
-
+        if(savedInstanceState ==null && getContext()!=null){
+            if(Functions.isNetworkAvailable(getContext())) {
+            getItemShop();
+        }else{
+            Toast.makeText(getContext(),getString(R.string.no_internet_message),Toast.LENGTH_SHORT).show();
+        }}
         return view;
     }
 
@@ -71,7 +85,8 @@ public class UpcomingItemsFragment extends Fragment implements ItemShopAdapter.I
 
             @Override
             public void onFailure(Call<UpcomingItems> call, Throwable t) {
-                Log.i("itemShop", t.getLocalizedMessage());
+                Log.i(getClass().getName(), t.getLocalizedMessage());
+                Toast.makeText(getContext(), R.string.retrofit_error_message,Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -94,5 +109,15 @@ public class UpcomingItemsFragment extends Fragment implements ItemShopAdapter.I
         upcomingItemsAdapter.stopLoading();
         upcomingItemsRecyclerView.setAdapter(null);
 
+
+    }
+
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putParcelableArrayList(Constant.UPCOMING_ITEMS_BUNDLE_KEY,upcomingItems);
     }
 }
+
+

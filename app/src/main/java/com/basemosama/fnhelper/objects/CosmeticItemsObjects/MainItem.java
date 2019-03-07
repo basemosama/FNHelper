@@ -5,10 +5,12 @@ import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 
 @Entity(tableName = "favorites")
-public class MainItem {
+public class MainItem implements Parcelable {
 
     @PrimaryKey (autoGenerate = true)
     private int id;
@@ -77,8 +79,35 @@ public class MainItem {
         this.occurrences = occurrences;
     }
 
-    //Setters and Getters
 
+    @Ignore
+    protected MainItem(Parcel in) {
+        id = in.readInt();
+        identifier = in.readString();
+        name = in.readString();
+        description = in.readString();
+        cost = in.readInt();
+        type = in.readString();
+        rarity = in.readString();
+        upcoming = in.readInt();
+        lastupdate = in.readLong();
+        obtained = in.readString();
+        obtained_type = in.readString();
+        todaystore = in.readInt();
+    }
+
+    @Ignore
+    public static final Creator<MainItem> CREATOR = new Creator<MainItem>() {
+        @Override
+        public MainItem createFromParcel(Parcel in) {
+            return new MainItem(in);
+        }
+
+        @Override
+        public MainItem[] newArray(int size) {
+            return new MainItem[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -209,7 +238,25 @@ public class MainItem {
     }
 
 
-
-
-
+    @Ignore
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+    @Ignore
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(identifier);
+        parcel.writeString(name);
+        parcel.writeString(description);
+        parcel.writeInt(cost);
+        parcel.writeString(type);
+        parcel.writeString(rarity);
+        parcel.writeInt(upcoming);
+        parcel.writeLong(lastupdate);
+        parcel.writeString(obtained);
+        parcel.writeString(obtained_type);
+        parcel.writeInt(todaystore);
+    }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 public class MainViewModel extends AndroidViewModel {
 
 
-    LiveData<List<MainItem>> favoritesListLiveData;
+    private LiveData<List<MainItem>> favoritesListLiveData;
 
     public MainViewModel(@NonNull Application application) {
         super(application);

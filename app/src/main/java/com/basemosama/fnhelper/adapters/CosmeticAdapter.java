@@ -75,8 +75,8 @@ public class CosmeticAdapter extends RecyclerView.Adapter<CosmeticAdapter.Cosmet
             Picasso.get().load(imageUrl)
                     .fit()
                     .tag(CosmeticAdapter.class.getName())
-                    .placeholder(R.drawable.placeholder1)
-                    .error(R.drawable.placeholder1)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
                     .into(cosmeticImage);
         }
 

@@ -7,6 +7,9 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
 
+    <dimen name="cosmetic_image_margin">10dp</dimen>
+    <dimen name="cosmetic_image_margin_end">10dp</dimen>
+
     <integer name="no_of_columns">2</integer>
     <integer name="no_of_news_columns">1</integer>
 

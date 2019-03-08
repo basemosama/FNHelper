@@ -1,5 +1,6 @@
 package com.basemosama.fnhelper.fragments;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.basemosama.fnhelper.Constants.Constant;
@@ -87,7 +89,8 @@ public class NewsFragment extends Fragment implements NewsAdapter.NewsItemClickL
             @Override
             public void onFailure(Call<News> call, Throwable t) {
                 Log.i(getClass().getName(),t.getLocalizedMessage());
-                Toast.makeText(getContext(), R.string.retrofit_error_message,Toast.LENGTH_SHORT).show();
+                if(getContext() !=null)
+                    Toast.makeText(getContext(), R.string.retrofit_error_message,Toast.LENGTH_SHORT).show();
 
 
             }
@@ -105,17 +108,28 @@ public class NewsFragment extends Fragment implements NewsAdapter.NewsItemClickL
         newsRecyclerView.setAdapter(null);
     }
 
-    @Override
-    public void onNewsItemClickListener(int position) {
-        Toast.makeText(getContext(), news.get(position).getTitle(),Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(getContext(), NewsActivity.class);
-        intent.putExtra(Constant.INTENT_news_KEY,news.get(position));
-        startActivity(intent);
-    }
+
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle bundle) {
         super.onSaveInstanceState(bundle);
         bundle.putParcelableArrayList(Constant.NEWS_BUNDLE_KEY,news);
+    }
+
+    @Override
+    public void onNewsItemClickListener(int position, ImageView sharedImageView) {
+        Toast.makeText(getContext(), news.get(position).getTitle(),Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(getContext(), NewsActivity.class);
+        intent.putExtra(Constant.INTENT_news_KEY,news.get(position));
+        Bundle bundle= null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            bundle = ActivityOptions.
+                    makeSceneTransitionAnimation(
+                            getActivity()
+                            ,sharedImageView
+                            ,sharedImageView.getTransitionName()
+                    ).toBundle();
+        }
+        startActivity(intent,bundle);
     }
 }

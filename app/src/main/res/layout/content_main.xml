@@ -14,6 +14,7 @@
         android:layout_height="match_parent"
         android:id="@+id/fragment_container"
         android:layout_above="@id/adView"
+        android:nextFocusDown="@id/adView"
    />
 
     <android.support.design.widget.BottomNavigationView
@@ -24,6 +25,7 @@
         app:menu="@menu/bottom_nav_menu"
         android:background="?android:windowBackground"
         android:elevation="4dp"
+        android:focusable="true"
         />
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -32,6 +34,8 @@
         ads:adSize="SMART_BANNER"
         ads:adUnitId="@string/banner_ad_unit_id"
         android:layout_above="@id/bottom_nav_view"
+        android:focusable="true"
+        android:nextFocusDown="@id/bottom_nav_view"
    >
     </com.google.android.gms.ads.AdView>
 

@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkColor"
+    android:background="@color/colorDark"
     android:padding="@dimen/widget_margin">
 
     <GridView
@@ -14,15 +14,18 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/empty_view">
+            android:id="@+id/empty_view"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+
+            >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Empty widget"
+                android:text="@string/widget_empty_text"
                 android:textSize="20sp"
                 android:textColor="@color/colorWhite"
-                android:gravity="center"
                 />
         </RelativeLayout>
 

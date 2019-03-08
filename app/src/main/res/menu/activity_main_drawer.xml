@@ -6,11 +6,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_main"
-            android:icon="@drawable/ic_face_black_24dp"
+            android:icon="@drawable/cosmetic_item"
             android:title="@string/cosmetic_items" />
           <item
         android:id="@+id/nav_item_shop"
-        android:icon="@drawable/ic_store_black_24dp"
+        android:icon="@drawable/item_shop"
         android:title="@string/item_shop" />
         <item
             android:id="@+id/nav_upcoming"
@@ -37,7 +37,7 @@
 <group
     android:checkableBehavior="none"
     >
-    <item android:title="Not affiliated with Epic Games"
+    <item android:title="@string/epic_games_credits"
         android:icon="@drawable/ic_about">
     </item>
 </group>

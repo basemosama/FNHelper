@@ -1,25 +1,15 @@
 package com.basemosama.fnhelper.appWidget;
 
 import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProvider;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.basemosama.fnhelper.Constants.Constant;
 import com.basemosama.fnhelper.R;
-import com.basemosama.fnhelper.database.CosmeticDatabase;
-import com.basemosama.fnhelper.objects.CosmeticItemsObjects.MainItem;
 import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShopItems;
 import com.squareup.picasso.Picasso;
 
@@ -73,8 +63,8 @@ public class GridViewWidgetFactory implements RemoteViewsService.RemoteViewsFact
             Bitmap bitmap= Picasso
                     .get()
                     .load(itemShopItems.get(i).getItem().getImages().getInformation())
-                    .placeholder(R.drawable.placeholder1)
-                    .error(R.drawable.placeholder1)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
                     .get();
             remoteViews.setImageViewBitmap(R.id.cosmetic_grid_widget_image,bitmap);
         } catch (IOException e) {

@@ -1,7 +1,6 @@
 package com.basemosama.fnhelper.fragments;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,7 +20,7 @@ import com.basemosama.fnhelper.adapters.CosmeticAdapter;
 import com.basemosama.fnhelper.objects.CosmeticItemsObjects.MainItem;
 import com.basemosama.fnhelper.utility.CosmeticService;
 import java.util.ArrayList;
-import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,13 +40,13 @@ public class CosmeticsListFragment extends Fragment implements CosmeticAdapter.C
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.cosmetic_list_fragment,container,false);
-        cosmeticsRecyclerView=view.findViewById(R.id.cosmetis_list_rv);
+        cosmeticsRecyclerView=view.findViewById(R.id.cosmetic_list_rv);
         int noOfColumns=2;
         if(getContext()!=null){
             noOfColumns=getContext().getResources().getInteger(R.integer.no_of_columns);
         }
         if(savedInstanceState!=null){
-            mainItems=savedInstanceState.getParcelableArrayList(Constant.COSAMETIC_ITEMS_BUNDLE_KEY);
+            mainItems=savedInstanceState.getParcelableArrayList(Constant.COSMETIC_ITEMS_BUNDLE_KEY);
         }
 
         cosmeticsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),noOfColumns));
@@ -95,14 +94,6 @@ public class CosmeticsListFragment extends Fragment implements CosmeticAdapter.C
 
     }
 
-    @Override
-    public void onCosmeticItemClickListener(int position) {
-
-        Intent intent=new Intent(getContext(), CosmeticActivity.class);
-        intent.putExtra(Constant.INTENT_ID_KEY, mainItems.get(position).getIdentifier());
-        Toast.makeText(getContext(), mainItems.get(position).getName(),Toast.LENGTH_SHORT).show();
-        startActivity(intent);
-    }
 
     @Override
     public void onDestroyView() {
@@ -117,8 +108,14 @@ public class CosmeticsListFragment extends Fragment implements CosmeticAdapter.C
     @Override
     public void onSaveInstanceState(@NonNull Bundle bundle) {
         super.onSaveInstanceState(bundle);
-        bundle.putParcelableArrayList(Constant.COSAMETIC_ITEMS_BUNDLE_KEY,mainItems);
+        bundle.putParcelableArrayList(Constant.COSMETIC_ITEMS_BUNDLE_KEY,mainItems);
     }
 
 
+    @Override
+    public void onCosmeticItemClickListener(int position) {
+        Intent intent=new Intent(getContext(), CosmeticActivity.class);
+        intent.putExtra(Constant.INTENT_ID_KEY, mainItems.get(position).getIdentifier());
+        startActivity(intent);
+    }
 }

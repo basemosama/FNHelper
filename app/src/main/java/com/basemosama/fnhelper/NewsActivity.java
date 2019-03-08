@@ -3,6 +3,7 @@ package com.basemosama.fnhelper;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,6 +22,7 @@ import com.basemosama.fnhelper.objects.NewsObjects.NewsEntries;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.text.Format;
@@ -32,7 +34,6 @@ import java.util.Locale;
 public class NewsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     NewsEntries news;
-    private ImageView newsImage;
     TextView newsDescription,newsDate;
 
     @Override
@@ -49,10 +50,10 @@ public class NewsActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         Intent intent =new Intent(this,MainActivity.class);
-        intent.putExtra("id",id);
+        intent.putExtra(Constant.INTENT_MAIN_NAV_ID_KEY,id);
         startActivity(intent);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
 
@@ -62,19 +63,32 @@ public class NewsActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
 
-        newsImage=findViewById(R.id.news_activity_image);
+        ImageView newsImage = findViewById(R.id.news_activity_image);
         newsDescription =findViewById(R.id.news_description);
         newsDate =findViewById(R.id.news_date);
+        TextView newsName = findViewById(R.id.news_name);
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
+        supportPostponeEnterTransition();
         news=getIntent().getParcelableExtra(Constant.INTENT_news_KEY);
-        setTitle(news.getTitle());
         Picasso.get()
                 .load(news.getImage())
-                .into(newsImage);
+                .into(newsImage, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        supportStartPostponedEnterTransition();
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        supportStartPostponedEnterTransition();
+
+                    }
+                });
+
+        newsName.setText(news.getTitle());
         newsDescription.setText(news.getBody());
         Date date=new Date(Long.valueOf(news.getTime())*1000);
         Format format = new SimpleDateFormat("HH:mm a - dd/MM/yyyy", Locale.US);

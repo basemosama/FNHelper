@@ -1,6 +1,7 @@
 package com.basemosama.fnhelper.fragments;
 
 import android.Manifest;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -83,7 +85,7 @@ public class ItemShopFragment extends Fragment implements ItemShopAdapter.ItemSh
             public void onClick(View view) {
 
                Toast.makeText(getContext(), R.string.item_shop_scroll_message,Toast.LENGTH_SHORT).show();
-                if(isStoragePermissionGranted())
+                if(Functions.isStoragePermissionGranted(getContext(),getActivity()))
                 shareItemShopImage();
             }
         });
@@ -121,19 +123,14 @@ public class ItemShopFragment extends Fragment implements ItemShopAdapter.ItemSh
             @Override
             public void onFailure(Call<ItemShop> call, Throwable t) {
                 Log.i(getClass().getName(), t.getLocalizedMessage());
+                if(getContext()!=null)
                 Toast.makeText(getContext(), R.string.retrofit_error_message,Toast.LENGTH_SHORT).show();
 
             }
         });
     }
 
-    @Override
-    public void onItemShopClickListener(int position) {
-        Toast.makeText(getContext(), itemShopItems.get(position).getName(),Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(getContext(), CosmeticActivity.class);
-        intent.putExtra(Constant.INTENT_ID_KEY,itemShopItems.get(position).getItemid());
-        startActivity(intent);
-    }
+
 
     @Override
     public void onDestroyView() {
@@ -150,78 +147,31 @@ public class ItemShopFragment extends Fragment implements ItemShopAdapter.ItemSh
         bundle.putParcelableArrayList(Constant.ITEM_SHOP_BUNDLE_KEY,itemShopItems);
     }
 
-    private   void saveBitmap(Bitmap bitmap) {
-        imagePath = new File(Environment.getExternalStorageDirectory() + "/screenshot.png");
-        FileOutputStream fos;
-        try {
-            fos = new FileOutputStream(imagePath);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-            fos.flush();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, e.getMessage(), e);
-        } catch (IOException e) {
-            Log.e(TAG, e.getMessage(), e);
-        }
-    }
-    private void shareItemShop() {
+
+
+    private void  shareItemShopImage(){
+        File imagePath=Functions.saveAndGetScreenShot(true,itemShopRecyclerView);
         Uri uri= Uri.fromFile(imagePath);
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/*");
-        String shareBody = "Today's Item Shop";
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Item Shop");
+        String shareBody = getString(R.string.today_item_shop);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.item_shop));
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
 
-        startActivity(Intent.createChooser(sharingIntent, "Share via"));
-    }
-
-    private void  shareItemShopImage(){
-        itemShopRecyclerView.scrollToPosition(0);
-        itemShopRecyclerView.measure(
-                View.MeasureSpec.makeMeasureSpec(itemShopRecyclerView.getWidth(), View.MeasureSpec.EXACTLY),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-
-        Bitmap bm = Bitmap.createBitmap(itemShopRecyclerView.getWidth(), itemShopRecyclerView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-        itemShopRecyclerView.draw(new Canvas(bm));
-        saveBitmap(bm);
-        shareItemShop();
+        startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
 
     }
+
+
+
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(grantResults[0]== PackageManager.PERMISSION_GRANTED)
-            shareItemShopImage();
+    public void onItemShopClickListener(int position) {
+        Toast.makeText(getContext(), itemShopItems.get(position).getName(),Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(getContext(), CosmeticActivity.class);
+        intent.putExtra(Constant.INTENT_ID_KEY,itemShopItems.get(position).getItemid());
 
+        startActivity(intent);
     }
-
-    public  boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(getContext()!=null){
-            if (ContextCompat.checkSelfPermission(getContext(),android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG,"Permission is granted");
-                return true;
-            } else {
-
-                Log.v(TAG,"Permission is revoked");
-                if(getActivity()!=null)
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                return false;
-            }
-        }
-        return false;
-        }
-        else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG,"Permission is granted");
-            return true;
-        }
-
-
-    }
-
-
-
 }

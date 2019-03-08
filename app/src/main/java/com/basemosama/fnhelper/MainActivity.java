@@ -16,11 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
 import com.basemosama.fnhelper.Constants.Constant;
 import com.basemosama.fnhelper.fragments.ChallengesFragment;
 import com.basemosama.fnhelper.fragments.CosmeticsListFragment;
@@ -28,21 +24,13 @@ import com.basemosama.fnhelper.fragments.FavoriteListFragment;
 import com.basemosama.fnhelper.fragments.ItemShopFragment;
 import com.basemosama.fnhelper.fragments.NewsFragment;
 import com.basemosama.fnhelper.fragments.UpcomingItemsFragment;
-import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShop;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.firebase.analytics.FirebaseAnalytics;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FragmentManager fragmentManager;
-    private AdView mAdView;
     private BottomNavigationView bottomNavigationView;
     private DrawerLayout drawer;
     int currentFragment=1;
@@ -57,30 +45,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -151,8 +121,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
-        mAdView = findViewById(R.id.adView);
+        MobileAds.initialize(this, getString(R.string.admob_app_id));
+        AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -166,15 +136,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setUpNavigationViews();
 
-         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         Intent intent=getIntent();
-        if(intent.hasExtra("id")){
-            int id=intent.getIntExtra("id",R.id.nav_main);
+        if(intent.hasExtra(Constant.INTENT_MAIN_NAV_ID_KEY)){
+            int id=intent.getIntExtra(Constant.INTENT_MAIN_NAV_ID_KEY,R.id.nav_main);
             handleNavigationClick(id);
         }
 
@@ -248,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             shareIntent.setType("text/plain");
-            shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Hey, download this app!");
+            shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, R.string.share_message);
             startActivity(shareIntent);
 
         }

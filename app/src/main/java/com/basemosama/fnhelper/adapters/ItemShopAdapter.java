@@ -3,14 +3,12 @@ package com.basemosama.fnhelper.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.basemosama.fnhelper.R;
-import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShop;
 import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShopItems;
 import com.squareup.picasso.Picasso;
 
@@ -69,15 +67,17 @@ public class ItemShopAdapter extends RecyclerView.Adapter<ItemShopAdapter.ItemSh
 
         }
 
-        private void bind(int position){
-            String imageUrl= itemShopItems.get(position).getItem().getImages().getInformation();
-            Picasso.get().load(imageUrl)
-                    .fit()
-                    .tag(ItemShopAdapter.class.getName())
-                    .placeholder(R.drawable.placeholder1)
-                    .into(cosmeticImage);
-        }
+        private void bind(int position) {
+            if (itemShopItems != null) {
+                String imageUrl = itemShopItems.get(position).getItem().getImages().getInformation();
+                Picasso.get().load(imageUrl)
+                        .fit()
+                        .tag(ItemShopAdapter.class.getName())
+                        .placeholder(R.drawable.placeholder)
+                        .into(cosmeticImage);
+            }
 
+         }
          @Override
          public void onClick(View view) {
              itemShopClickListener.onItemShopClickListener(getAdapterPosition());

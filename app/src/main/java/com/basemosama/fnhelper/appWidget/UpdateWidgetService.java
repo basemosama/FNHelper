@@ -38,7 +38,6 @@ public class UpdateWidgetService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_UPDATE_WIDGET.equals(action)) {
-             //   getWidgetFavoriteItems();
                 getWidgetItemShopItems();
             }
         }

@@ -7,7 +7,9 @@
     android:elevation="4dp"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
-    app:cardCornerRadius="4dp">
+    app:cardCornerRadius="4dp"
+    android:focusable="true"
+    >
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="100dp"
@@ -22,7 +24,7 @@
         android:layout_weight="6"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp" />
+ />
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -51,7 +53,6 @@
         android:layout_weight="1"
         android:layout_gravity="end|center_vertical"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
         android:contentDescription="@string/battle_star" />
 
 </LinearLayout>

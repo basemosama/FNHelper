@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="no_of_columns">4</integer>
+    <integer name="no_of_news_columns">2</integer>
+    <dimen name="cosmetic_image_margin_end">50dp</dimen>
+    <dimen name="cosmetic_image_margin">10dp</dimen>
+</resources>

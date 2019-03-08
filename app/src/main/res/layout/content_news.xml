@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".NewsActivity"
+    android:background="@color/colorDark"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+
+    >
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@id/adView"
+
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/news_activity_image"
+        android:scaleType="centerCrop"
+        android:transitionName="@string/news"
+        android:contentDescription="@string/news_image" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/news_name"
+            tools:text="Name"
+            android:layout_margin="10dp"
+            android:textSize="30sp"
+            android:textColor="@color/colorBlue"
+            android:layout_below="@id/news_activity_image"
+            android:layout_centerHorizontal="true"
+            />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/news_date_text"
+        android:text="@string/date"
+        android:layout_margin="10dp"
+        android:textSize="25sp"
+        android:textColor="@color/colorAccent"
+        android:layout_below="@id/news_name"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/news_date"
+        android:layout_margin="10dp"
+        android:textSize="23sp"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@id/news_name"
+        android:layout_toEndOf="@id/news_date_text"
+        android:layout_centerVertical="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/news_description_text"
+        android:text="@string/description"
+        android:layout_margin="10dp"
+        android:textSize="25sp"
+        android:textColor="@color/colorAccent"
+        android:layout_below="@id/news_date_text"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/news_description"
+        android:layout_margin="10dp"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@id/news_description_text"
+        />
+    </RelativeLayout>
+
+</ScrollView>
+
+<com.google.android.gms.ads.AdView
+android:id="@+id/adView"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+ads:adSize="SMART_BANNER"
+ads:adUnitId="@string/banner_ad_unit_id"
+android:layout_above="@id/bottom_nav_view"
+android:layout_alignParentBottom="true"
+    />
+
+    </RelativeLayout>

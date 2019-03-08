@@ -1,15 +1,10 @@
 package com.basemosama.fnhelper;
 
-import android.appwidget.AppWidgetManager;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -30,8 +25,6 @@ import android.widget.Toast;
 
 import com.basemosama.fnhelper.Constants.Constant;
 import com.basemosama.fnhelper.adapters.ImagesAdapter;
-import com.basemosama.fnhelper.appWidget.ItemShopWidget;
-import com.basemosama.fnhelper.appWidget.UpdateWidgetService;
 import com.basemosama.fnhelper.database.AppExcuters;
 import com.basemosama.fnhelper.database.CheckCosmeticViewModel;
 import com.basemosama.fnhelper.database.CheckCosmeticViewModelFactory;
@@ -40,8 +33,6 @@ import com.basemosama.fnhelper.objects.CosmeticItemsObjects.CosmeticImages;
 import com.basemosama.fnhelper.objects.CosmeticItemsObjects.MainItem;
 import com.basemosama.fnhelper.utility.CosmeticService;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,22 +43,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CosmeticActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public final String TAG="CosmeticActivity";
     String cosmeticIdentifier;
     private MainItem cosmeticItem;
     private ImageView itemImage;
-    private TextView itemName,itemDescription,itemType,itemCost,itemOnTheStore,itemReleaseDate,itemLastDate,itemRating,itemOccurances;
-    private TextView itemDescriptionText,itemTypeText,itemCostText,itemReleaseDateText,itemLastDateText,itemRatingText,itemOccurancesText;
+    private TextView itemDescription,itemType,itemCost,itemOnTheStore,itemReleaseDate,itemLastDate,itemRating, itemOccurrences;
+    private TextView itemDescriptionText,itemCostText;
 
     private ScrollView itemScrollView;
-    private String upcomingText,cost,rating,description,releaseDate,type,imageUrl,lastDate,occurances ;
-    private List<String> images;
+    private String upcomingText,cost,rating,description,releaseDate,type,imageUrl,lastDate, occurrences;
     RecyclerView imagesRecyclerView;
     ImagesAdapter imagesAdapter;
     CosmeticDatabase cosmeticDatabase;
-    LiveData<Boolean> favoriteLiveData;
     boolean isInFavourite=false;
-    private MenuItem favroiteItem;
-    private FloatingActionButton fab;
+    private MenuItem favoriteItem;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +78,7 @@ public class CosmeticActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.cosmetic, menu);
-         favroiteItem=menu.getItem(1);
+         favoriteItem=menu.getItem(1);
         checkFavorites();
         return true;
     }
@@ -100,7 +90,6 @@ public class CosmeticActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -122,10 +111,10 @@ public class CosmeticActivity extends AppCompatActivity
         int id = item.getItemId();
 
         Intent intent =new Intent(this,MainActivity.class);
-        intent.putExtra("id",id);
+        intent.putExtra(Constant.INTENT_MAIN_NAV_ID_KEY,id);
         startActivity(intent);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -143,17 +132,15 @@ public class CosmeticActivity extends AppCompatActivity
             public void onResponse(Call<MainItem> call, Response<MainItem> response) {
                 if (response.body() != null) {
                     cosmeticItem = response.body();
-                    Log.i("myretrofit", cosmeticItem.getName() );
                     updateUi();
                 }
-                Log.i("myretrofit", "done" );
 
 
             }
 
             @Override
             public void onFailure(Call<MainItem> call, Throwable t) {
-                Log.i("myretrofit", t.getLocalizedMessage());
+                Log.i(TAG, t.getLocalizedMessage());
             }
         });
     }
@@ -177,7 +164,7 @@ public class CosmeticActivity extends AppCompatActivity
          description=cosmeticItem.getDescription();
          releaseDate=cosmeticItem.getOccurrences().getFirst();
          lastDate= String.valueOf(cosmeticItem.getOccurrences().getLast());
-         occurances= String.valueOf(cosmeticItem.getOccurrences().getOccurrences());
+         occurrences = String.valueOf(cosmeticItem.getOccurrences().getOccurrences());
          upcomingText="";
 
         //cost
@@ -188,30 +175,31 @@ public class CosmeticActivity extends AppCompatActivity
             cost = cosmeticItem.getObtained() + " " + cosmeticItem.getObtained_type();
         }
         if(TextUtils.isEmpty(cost) || cost.equals("???")) {
-            cost="unavailable";
+            cost=getString(R.string.not_available);
         }
 
         //upcoming
         if(cosmeticItem.getUpcoming()==1){
-            upcomingText="Upcoming ";
-            cost="Not available yet";
-           releaseDate= lastDate = occurances="None";
+            upcomingText=getString(R.string.upcoming);
+            cost=getString(R.string.not_available_yet);
+           releaseDate= lastDate = getString(R.string.not_available);
+           occurrences =getString(R.string.not_available);
 
         }
         type=upcomingText +cosmeticItem.getRarity() + " "+cosmeticItem.getType();
 
 
         if(TextUtils.isEmpty(releaseDate) || releaseDate.equals("--")) {
-            releaseDate="Not Available";
+            releaseDate=getString(R.string.not_available);
         }
         if(TextUtils.isEmpty(lastDate) || lastDate.equals("--")) {
-            lastDate="Not Available";
+            lastDate=getString(R.string.not_available);
         }
-        if(TextUtils.isEmpty(occurances)) {
-            occurances="Not Available";
+        if(TextUtils.isEmpty(occurrences)) {
+            occurrences =getString(R.string.not_available);
         }
         if(TextUtils.isEmpty(rating)) {
-            rating="Not Available";
+            rating=getString(R.string.not_available);
         }
         if(TextUtils.isEmpty(description)) {
             itemDescriptionText.setVisibility(View.GONE);
@@ -232,7 +220,8 @@ public class CosmeticActivity extends AppCompatActivity
         Picasso.get()
                 .load(imageUrl)
                 .fit()
-                .placeholder(R.drawable.placeholder1)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
                 .into(itemImage);
 
         setTitle(cosmeticItem.getName());
@@ -241,7 +230,7 @@ public class CosmeticActivity extends AppCompatActivity
         itemCost.setText(cost);
         itemReleaseDate.setText(releaseDate);
         itemLastDate.setText(lastDate);
-        itemOccurances.setText(occurances);
+        itemOccurrences.setText(occurrences);
         itemRating.setText(rating);
         imagesAdapter=new ImagesAdapter(this,CosmeticImages.getImages(cosmeticItem.getImages()));
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
@@ -253,22 +242,16 @@ public class CosmeticActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         itemImage=findViewById(R.id.item_image);
-        itemName=findViewById(R.id.item_name);
         itemDescription=findViewById(R.id.item_description);
         itemCost=findViewById(R.id.item_cost);
         itemType=findViewById(R.id.item_type);
         itemReleaseDate=findViewById(R.id.item_release_date);
         itemLastDate=findViewById(R.id.item_last_date);
-        itemOccurances=findViewById(R.id.item_ocurrances);
+        itemOccurrences =findViewById(R.id.item_ocurrances);
         itemOnTheStore=findViewById(R.id.item_on_the_store);
         itemRating=findViewById(R.id.item_rating);
         itemDescriptionText=findViewById(R.id.item_description_text);
         itemCostText=findViewById(R.id.item_cost_text);
-        itemTypeText=findViewById(R.id.item_type_text);
-        itemReleaseDateText=findViewById(R.id.item_release_date_text);
-        itemLastDateText=findViewById(R.id.item_last_date_text);
-        itemOccurancesText=findViewById(R.id.item_ocurrances_text);
-        itemRatingText=findViewById(R.id.rating_text);
         imagesRecyclerView=findViewById(R.id.images_rv);
         itemScrollView =findViewById(R.id.item_scroll_view);
         Intent intent=getIntent();
@@ -278,15 +261,6 @@ public class CosmeticActivity extends AppCompatActivity
         }
 
 
-
-         fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -307,11 +281,10 @@ public class CosmeticActivity extends AppCompatActivity
             public void onChanged(@Nullable Boolean value) {
                 if(value!=null)
                     isInFavourite=value;
-                Log.i("isInFavorite", String.valueOf(value));
                 if(isInFavourite){
-                    favroiteItem.setIcon(R.drawable.remove_from_favourite);
+                    favoriteItem.setIcon(R.drawable.remove_from_favourite);
                 }else {
-                    favroiteItem.setIcon(R.drawable.add_to_favoutite);
+                    favoriteItem.setIcon(R.drawable.add_to_favoutite);
 
                 }
 

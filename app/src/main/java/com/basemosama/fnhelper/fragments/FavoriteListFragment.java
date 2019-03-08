@@ -1,5 +1,6 @@
 package com.basemosama.fnhelper.fragments;
 
+import android.app.ActivityOptions;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.basemosama.fnhelper.Constants.Constant;
@@ -73,15 +75,6 @@ public class FavoriteListFragment extends Fragment implements CosmeticAdapter.Co
 
 
 
-    @Override
-    public void onCosmeticItemClickListener(int position) {
-
-        Intent intent=new Intent(getContext(), CosmeticActivity.class);
-        intent.putExtra(Constant.INTENT_ID_KEY, favoriteList.get(position).getIdentifier());
-        //intent.putExtra(Constant.INTENT_FAVORITE_KEY,favoriteList);
-        Toast.makeText(getContext(), favoriteList.get(position).getName(),Toast.LENGTH_SHORT).show();
-        startActivity(intent);
-    }
 
     @Override
     public void onDestroyView() {
@@ -94,5 +87,12 @@ public class FavoriteListFragment extends Fragment implements CosmeticAdapter.Co
     public void onSaveInstanceState(@NonNull Bundle bundle) {
         super.onSaveInstanceState(bundle);
         bundle.putParcelableArrayList(Constant.FAVORITE_ITEMS_BUNDLE_KEY,favoriteList);
+    }
+
+    @Override
+    public void onCosmeticItemClickListener(int position) {
+        Intent intent=new Intent(getContext(), CosmeticActivity.class);
+        intent.putExtra(Constant.INTENT_ID_KEY, favoriteList.get(position).getIdentifier());
+        startActivity(intent);
     }
 }

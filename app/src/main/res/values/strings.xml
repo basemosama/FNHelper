@@ -1,9 +1,7 @@
 <resources>
-    <string name="app_name">FN Helper</string>
+    <string name="app_name" translatable="false">FN Helper</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="cosmetic_item_image">Cosmetic Item Image</string>
@@ -26,20 +24,33 @@
     <string name="images">Images :</string>
     <string name="add_to_favourite">Add To favourite</string>
     <string name="favorites">Favorites</string>
-    <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="credits">Developed By :</string>
     <string name="developer_name">Basem Osama</string>
-    <string name="epic_games_credits">We are not affiliated Epic Games \n
-        our content is not official or endorsed by Epic Games in any way. \n
-     Fortnite is copyright by Epic Games and is not affiliated with this app.</string>
     <string name="share">Share</string>
     <string name="removed_from_favorites">&#160; has been removed from Favorites.</string>
     <string name="added_to_favorites">&#160; has been added to Favorites.</string>
-    <string name="week">Week</string>
+    <string name="week">Week &#160;</string>
     <string name="retrofit_error_message">Sorry there was an error , Try again Later</string>
     <string name="no_internet_message">Sorry , There is no Intenet available , Please try again later</string>
     <string name="item_shop_scroll_message">Scroll To the End of the Item Shop to show all items</string>
+    <string name="news_image">News Image</string>
+    <string name="date">Date :</string>
+    <string name="upcoming" translatable="false">Upcoming</string>
+    <string name="not_available_yet">Not available yet</string>
+    <string name="not_available">Not Available</string>
+    <string name="epic_games_credits">Not affiliated with Epic Games</string>
+    <string name="widget_empty_text">Sorry , There was an error while Loading the widget</string>
+    <string name="share_message">Hey, download this app! \n https://play.google.com/store/apps/details?id=com.basemosama.fnhelper</string>
+
+    <string name="expand_challenges">Expand Challenges</string>
+    <string name="challenge_not_available">This Week Challenges are\'t available yet .</string>
+    <string name="collapse_challenges">Collapse Challenges</string>
+    <string name="admob_app_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="today_item_shop">Today\'s Item Shop</string>
+    <string name="share_via">Share via</string>
+    <string name="upcoming_items_share_body">All Upcoming Fortnite Cosmetic Items</string>
+
 
 </resources>

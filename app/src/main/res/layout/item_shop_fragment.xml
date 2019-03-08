@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:id="@+id/item_shop_rv"
         android:layout_margin="5dp"
+        android:focusable="true"
         />
 
     <android.support.design.widget.FloatingActionButton
@@ -16,9 +17,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_menu_share"
+        app:srcCompat="@drawable/share"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:focusable="true"
 
         />
 </RelativeLayout>

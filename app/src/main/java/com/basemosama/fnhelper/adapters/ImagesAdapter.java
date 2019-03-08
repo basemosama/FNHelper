@@ -60,7 +60,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesView
             String imageUrl=images.get(position);
             Picasso.get().load(imageUrl)
                     .fit()
-                    .placeholder(R.drawable.placeholder1)
+                    .placeholder(R.drawable.placeholder)
                     .into(cosmeticImage);
         }
 

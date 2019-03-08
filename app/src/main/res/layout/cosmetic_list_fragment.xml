@@ -6,7 +6,8 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/cosmetis_list_rv"
+        android:id="@+id/cosmetic_list_rv"
         android:layout_margin="5dp"
+        android:focusable="true"
         />
 </LinearLayout>

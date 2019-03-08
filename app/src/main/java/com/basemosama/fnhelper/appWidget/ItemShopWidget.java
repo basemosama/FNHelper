@@ -30,7 +30,6 @@ public class ItemShopWidget extends AppWidgetProvider {
                                 final int appWidgetId) {
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.item_shop_widget);
-        //views.setTextViewText(R.id.appwidget_text, widgetText);
         UpdateWidgetService.startActionUpdateWidget(context);
         Intent intent=new Intent(context,GridRemoteService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_drawer_open">افتح واجهة التنقل</string>
+    <string name="navigation_drawer_close">إغلق واجهة التنقل</string>
+    <string name="nav_header_desc">أعلي واجهة التنقل</string>
+
+    <string name="action_settings">الإعدادات</string>
+    <string name="cosmetic_item_image">صورة الشخصية</string>
+    <string name="battle_star">نجمة القتال</string>
+    <string name="cosmetic_items">الشخصيات</string>
+    <string name="item_shop">متجر اليوم</string>
+    <string name="upcoming_items">الشخصيات القادمة</string>
+    <string name="news">الأخبار</string>
+    <string name="challenges">التحديات</string>
+    <string name="title_activity_cosmetic">الشخصية</string>
+    <string name="description">الوصف :</string>
+    <string name="rating">التقييم :</string>
+    <string name="occurrences">مرات الظهور فى المتجر :</string>
+    <string name="last_apperance">أخر ظهور :</string>
+    <string name="release_date">أول ظهور :</string>
+    <string name="available_on_today_s_item_shop">متوفر فى متجر اليوم</string>
+    <string name="cost">التكلفة :</string>
+    <string name="type">النوع :</string>
+    <string name="battle_pass_text">الباتل باس :</string>
+    <string name="images">صور :</string>
+    <string name="add_to_favourite">أضف الي المفضلة</string>
+    <string name="favorites">المفضلة</string>
+    <string name="credits">تم تصميم هذا التطبيق بواسطة :</string>
+    <string name="developer_name">باسم أسامة</string>
+    <string name="share">شارك</string>
+    <string name="removed_from_favorites"> &#160;أُزيل من المفضلة</string>
+    <string name="added_to_favorites">&#160; أٌضيف إلي المفضلة .</string>
+    <string name="week">الاسبوع &#160;</string>
+    <string name="retrofit_error_message">عذراً لقد حدث خطأ ، رجاءً المحاولة فى وقت أخر</string>
+    <string name="no_internet_message">عذراً لا يتوفر إنترنت حالياً ، رجاءً المحاولة فى وقت أخر</string>
+    <string name="item_shop_scroll_message">تأكد من سحب الشاشة الي اخر المتجر</string>
+    <string name="news_image">صورة الخبر</string>
+    <string name="add_widget">أضف ويدجت</string>
+
+    <string name="date">التاريخ :</string>
+    <string name="not_available_yet">غير متاح بعد</string>
+    <string name="not_available">غير متاح</string>
+    <string name="epic_games_credits">نحن لا نتبع شركة Epic Games</string>
+    <string name="widget_empty_text">عذراً ، لقد حدث خطأ عند تحميل الويدجت</string>
+    <string name="share_message">مرحبا حمل هذا التطبيق ! \n https://play.google.com/store/apps/details?id=com.basemosama.fnhelper</string>
+
+    <string name="expand_challenges">مدد التحديات</string>
+    <string name="challenge_not_available">تحديات هذا الاسبوع غير متوفرة بعد</string>
+    <string name="collapse_challenges">صغر التحديات</string>
+    <string name="today_item_shop">متجر اليوم</string>
+    <string name="share_via">شارك عبر</string>
+    <string name="upcoming_items_share_body">جميع الشخصيات القادمة</string>
+
+
+
+
+</resources>

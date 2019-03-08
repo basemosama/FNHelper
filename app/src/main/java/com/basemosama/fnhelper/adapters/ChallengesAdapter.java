@@ -88,10 +88,12 @@ public class ChallengesAdapter extends RecyclerView.Adapter<ChallengesAdapter.Ch
                  weekChallengeRecyclerView.setVisibility(View.GONE);
                  notAvailableChallenge.setVisibility(View.GONE);
                  arrowImage.setImageResource(R.drawable.arrow_down);
+                 arrowImage.setContentDescription(context.getString(R.string.expand_challenges));
                  isVisible=false;
              }else {
                  weekChallengeRecyclerView.setVisibility(View.VISIBLE);
                  arrowImage.setImageResource(R.drawable.arrow_up);
+                 arrowImage.setContentDescription(context.getString(R.string.collapse_challenges));
                  if(challenges.getWeekChallenges().get(getAdapterPosition()).size()==0)
                      notAvailableChallenge.setVisibility(View.VISIBLE);
 

@@ -13,6 +13,7 @@
     android:layout_marginLeft="5dp"
     android:layout_marginStart="5dp"
     android:layout_marginTop="5dp"
+    android:transitionName="@string/cosmetic_item_image"
     />
 
 

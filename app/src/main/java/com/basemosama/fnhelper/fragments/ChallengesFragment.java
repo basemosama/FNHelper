@@ -82,6 +82,7 @@ public class ChallengesFragment extends Fragment {
             @Override
             public void onFailure(Call<Challenges> call, Throwable t) {
                 Log.i(getClass().getName(),t.getLocalizedMessage());
+                if(getContext()!=null)
                 Toast.makeText(getContext(), R.string.retrofit_error_message,Toast.LENGTH_SHORT).show();
 
 

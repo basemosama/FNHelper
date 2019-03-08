@@ -27,7 +27,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     }
     public interface NewsItemClickListener {
-        void onNewsItemClickListener(int position);
+        void onNewsItemClickListener(int position , ImageView sharedImageView);
     }
     @NonNull
     @Override
@@ -68,14 +68,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             newsTitle.setText(newsEntries.get(position).getTitle());
             String imageUrl= newsEntries.get(position).getImage();
             Picasso.get().load(imageUrl)
-                    .placeholder(R.drawable.placeholder1)
+                    .placeholder(R.drawable.placeholder)
                     .fit()
                     .into(newsImage);
         }
 
          @Override
          public void onClick(View view) {
-             newsItemClickListener.onNewsItemClickListener(getAdapterPosition());
+             newsItemClickListener.onNewsItemClickListener(getAdapterPosition(),newsImage);
          }
      }
 }

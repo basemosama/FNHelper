@@ -12,16 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.basemosama.fnhelper.Constants.Constant;
-import com.basemosama.fnhelper.Constants.Functions;
+import com.basemosama.fnhelper.constants.Constant;
+import com.basemosama.fnhelper.constants.Functions;
 import com.basemosama.fnhelper.R;
 import com.basemosama.fnhelper.adapters.ChallengesAdapter;
 import com.basemosama.fnhelper.objects.ChallengesObjects.Challenges;
 import com.basemosama.fnhelper.objects.ChallengesObjects.SeasonChallenges;
-import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShopItems;
 import com.basemosama.fnhelper.utility.CosmeticService;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,4 +1,4 @@
-package com.basemosama.fnhelper.Constants;
+package com.basemosama.fnhelper.constants;
 
 import android.Manifest;
 import android.app.Activity;

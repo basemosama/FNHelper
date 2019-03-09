@@ -26,13 +26,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         this.newsItemClickListener = newsItemClickListener;
 
     }
+
     public interface NewsItemClickListener {
-        void onNewsItemClickListener(int position , ImageView sharedImageView);
+        void onNewsItemClickListener(int position, ImageView sharedImageView);
     }
+
     @NonNull
     @Override
     public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-     View view = LayoutInflater.from(context).inflate(R.layout.news_item,viewGroup,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.news_item, viewGroup, false);
         return new NewsViewHolder(view);
     }
 
@@ -43,39 +45,43 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @Override
     public int getItemCount() {
-        if(newsEntries ==null){
-        return 0;}
+        if (newsEntries == null) {
+            return 0;
+        }
         return newsEntries.size();
     }
 
-    public void updateAdapter(List<NewsEntries> newNewsEntries){
-        if(newsEntries !=null){
-        newsEntries.clear();
-        newsEntries.addAll(newNewsEntries);}
+    public void updateAdapter(List<NewsEntries> newNewsEntries) {
+        if (newsEntries != null) {
+            newsEntries.clear();
+            newsEntries.addAll(newNewsEntries);
+        }
         notifyDataSetChanged();
     }
 
-     class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView newsImage;
         TextView newsTitle;
+
         private NewsViewHolder(@NonNull View itemView) {
             super(itemView);
-        newsImage=itemView.findViewById(R.id.news_image);
-        newsTitle=itemView.findViewById(R.id.news_title);
-        itemView.setOnClickListener(this);
+            newsImage = itemView.findViewById(R.id.news_image);
+            newsTitle = itemView.findViewById(R.id.news_title);
+            itemView.setOnClickListener(this);
         }
-        private void bind(int position){
+
+        private void bind(int position) {
             newsTitle.setText(newsEntries.get(position).getTitle());
-            String imageUrl= newsEntries.get(position).getImage();
+            String imageUrl = newsEntries.get(position).getImage();
             Picasso.get().load(imageUrl)
                     .placeholder(R.drawable.placeholder)
                     .fit()
                     .into(newsImage);
         }
 
-         @Override
-         public void onClick(View view) {
-             newsItemClickListener.onNewsItemClickListener(getAdapterPosition(),newsImage);
-         }
-     }
+        @Override
+        public void onClick(View view) {
+            newsItemClickListener.onNewsItemClickListener(getAdapterPosition(), newsImage);
+        }
+    }
 }

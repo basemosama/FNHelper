@@ -23,7 +23,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.basemosama.fnhelper.Constants.Constant;
+import com.basemosama.fnhelper.constants.Constant;
 import com.basemosama.fnhelper.adapters.ImagesAdapter;
 import com.basemosama.fnhelper.database.AppExcuters;
 import com.basemosama.fnhelper.database.CheckCosmeticViewModel;

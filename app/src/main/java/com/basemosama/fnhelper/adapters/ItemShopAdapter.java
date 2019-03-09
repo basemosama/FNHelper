@@ -24,14 +24,15 @@ public class ItemShopAdapter extends RecyclerView.Adapter<ItemShopAdapter.ItemSh
         this.itemShopItems = itemShopItems;
         this.itemShopClickListener = itemShopClickListener;
     }
+
     public interface ItemShopClickListener {
-         void onItemShopClickListener(int position);
+        void onItemShopClickListener(int position);
     }
 
     @NonNull
     @Override
     public ItemShopViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-     View view = LayoutInflater.from(context).inflate(R.layout.cosmetic_grid_item,viewGroup,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.cosmetic_grid_item, viewGroup, false);
         return new ItemShopViewHolder(view);
     }
 
@@ -42,28 +43,30 @@ public class ItemShopAdapter extends RecyclerView.Adapter<ItemShopAdapter.ItemSh
 
     @Override
     public int getItemCount() {
-        if(itemShopItems ==null){
-        return 0;}
+        if (itemShopItems == null) {
+            return 0;
+        }
         return itemShopItems.size();
     }
 
-    public void updateAdapter(List<ItemShopItems> newCosmeticItems){
+    public void updateAdapter(List<ItemShopItems> newCosmeticItems) {
         itemShopItems.clear();
         itemShopItems.addAll(newCosmeticItems);
         notifyDataSetChanged();
     }
 
-    public void stopLoading(){
+    public void stopLoading() {
         Picasso.get()
                 .cancelTag(ItemShopAdapter.class.getName());
     }
 
-     class ItemShopViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener{
-         ImageView cosmeticImage;
-         private ItemShopViewHolder(@NonNull View itemView) {
+    class ItemShopViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener {
+        ImageView cosmeticImage;
+
+        private ItemShopViewHolder(@NonNull View itemView) {
             super(itemView);
-        cosmeticImage=itemView.findViewById(R.id.cosmetic_grid_image);
-        cosmeticImage.setOnClickListener(this);
+            cosmeticImage = itemView.findViewById(R.id.cosmetic_grid_image);
+            cosmeticImage.setOnClickListener(this);
 
         }
 
@@ -77,14 +80,13 @@ public class ItemShopAdapter extends RecyclerView.Adapter<ItemShopAdapter.ItemSh
                         .into(cosmeticImage);
             }
 
-         }
-         @Override
-         public void onClick(View view) {
-             itemShopClickListener.onItemShopClickListener(getAdapterPosition());
-         }
-     }
+        }
 
-
+        @Override
+        public void onClick(View view) {
+            itemShopClickListener.onItemShopClickListener(getAdapterPosition());
+        }
+    }
 
 
 }

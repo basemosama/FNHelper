@@ -26,7 +26,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesView
     @NonNull
     @Override
     public ImagesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-     View view = LayoutInflater.from(context).inflate(R.layout.cosmetic_grid_item,viewGroup,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.cosmetic_grid_item, viewGroup, false);
         return new ImagesViewHolder(view);
     }
 
@@ -37,27 +37,31 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesView
 
     @Override
     public int getItemCount() {
-        if(images==null){
-        return 0;}
+        if (images == null) {
+            return 0;
+        }
         return images.size();
     }
 
-    public void updateAdapter(List<String> newImages){
-        if(images!=null){
-        images.clear();
-        images.addAll(newImages);}
+    public void updateAdapter(List<String> newImages) {
+        if (images != null) {
+            images.clear();
+            images.addAll(newImages);
+        }
         notifyDataSetChanged();
     }
 
 
-    class ImagesViewHolder extends RecyclerView.ViewHolder  {
+    class ImagesViewHolder extends RecyclerView.ViewHolder {
         private ImageView cosmeticImage;
+
         private ImagesViewHolder(@NonNull View itemView) {
             super(itemView);
-        cosmeticImage=itemView.findViewById(R.id.cosmetic_grid_image);
+            cosmeticImage = itemView.findViewById(R.id.cosmetic_grid_image);
         }
-        private void bind(int position){
-            String imageUrl=images.get(position);
+
+        private void bind(int position) {
+            String imageUrl = images.get(position);
             Picasso.get().load(imageUrl)
                     .fit()
                     .placeholder(R.drawable.placeholder)
@@ -65,7 +69,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesView
         }
 
 
-     }
+    }
 
 
 }

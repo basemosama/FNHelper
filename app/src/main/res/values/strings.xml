@@ -51,6 +51,7 @@
     <string name="today_item_shop">Today\'s Item Shop</string>
     <string name="share_via">Share via</string>
     <string name="upcoming_items_share_body">All Upcoming Fortnite Cosmetic Items</string>
+    <string name="fab_content_description">Take Screenshot and Share it</string>
 
 
 </resources>

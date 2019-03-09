@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.basemosama.fnhelper.Constants.Constant;
+import com.basemosama.fnhelper.constants.Constant;
 import com.basemosama.fnhelper.R;
 import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShopItems;
 import com.squareup.picasso.Picasso;

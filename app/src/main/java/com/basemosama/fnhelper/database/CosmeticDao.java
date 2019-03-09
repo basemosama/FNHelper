@@ -13,28 +13,27 @@ import com.basemosama.fnhelper.objects.CosmeticItemsObjects.MainItem;
 import java.util.List;
 
 @Dao
-public interface CosmeticDao  {
+public interface CosmeticDao {
 
 
     @Query("SELECT * FROM favorites ORDER BY id DESC")
     LiveData<List<MainItem>> getFavourites();
 
     @Insert
-    void insertItem (MainItem item);
+    void insertItem(MainItem item);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateItem (MainItem item);
+    void updateItem(MainItem item);
 
     @Delete
-    void deleteItem (MainItem item);
+    void deleteItem(MainItem item);
 
 
     @Query("SELECT EXISTS(SELECT 1 FROM favorites WHERE cosmetic_identifier = :cosmeticId)")
     LiveData<Boolean> isInFavourite(String cosmeticId);
 
     @Query("DELETE FROM favorites WHERE cosmetic_identifier = :id")
-    void deleteItemById (String id);
-
+    void deleteItemById(String id);
 
 
 }

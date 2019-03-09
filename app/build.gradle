@@ -3,6 +3,14 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'FortniteHelper1551'
+            storeFile file("$rootDir/fn_helper.jks")
+            storePassword 'FortniteHelper1551'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.basemosama.fnhelper"
@@ -18,6 +26,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
@@ -25,8 +34,7 @@ android {
 dependencies {
     def room_version = "1.1.1"
     def lifecycle_version = "1.1.1"
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:animated-vector-drawable:28.0.0'
     implementation 'com.android.support:customtabs:28.0.0'
@@ -47,12 +55,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-ads:17.1.3'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
-
-
     implementation 'com.android.support:support-v4:28.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
 }
 apply plugin: 'com.google.gms.google-services'

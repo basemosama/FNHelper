@@ -7,9 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
-import com.basemosama.fnhelper.Constants.Constant;
+import com.basemosama.fnhelper.constants.Constant;
 import com.basemosama.fnhelper.R;
-import com.basemosama.fnhelper.adapters.ItemShopAdapter;
 import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShop;
 import com.basemosama.fnhelper.objects.ItemShopObjects.ItemShopItems;
 import com.basemosama.fnhelper.utility.CosmeticService;
@@ -23,7 +22,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.basemosama.fnhelper.Constants.Constant.ACTION_UPDATE_WIDGET;
+import static com.basemosama.fnhelper.constants.Constant.ACTION_UPDATE_WIDGET;
 
 public class UpdateWidgetService extends IntentService {
     public static List<ItemShopItems> itemShopList=new ArrayList<>();

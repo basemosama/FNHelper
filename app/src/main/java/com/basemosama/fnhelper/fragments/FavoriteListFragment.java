@@ -1,6 +1,5 @@
 package com.basemosama.fnhelper.fragments;
 
-import android.app.ActivityOptions;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -10,14 +9,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.basemosama.fnhelper.Constants.Constant;
+import com.basemosama.fnhelper.constants.Constant;
 import com.basemosama.fnhelper.CosmeticActivity;
 import com.basemosama.fnhelper.R;
 import com.basemosama.fnhelper.adapters.CosmeticAdapter;
@@ -25,7 +21,6 @@ import com.basemosama.fnhelper.database.MainViewModel;
 import com.basemosama.fnhelper.objects.CosmeticItemsObjects.MainItem;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class FavoriteListFragment extends Fragment implements CosmeticAdapter.CosmeticItemClickListener {

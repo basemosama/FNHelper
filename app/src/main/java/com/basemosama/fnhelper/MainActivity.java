@@ -1,14 +1,9 @@
 package com.basemosama.fnhelper;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,7 +12,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import com.basemosama.fnhelper.Constants.Constant;
+
+import com.basemosama.fnhelper.constants.Constant;
 import com.basemosama.fnhelper.fragments.ChallengesFragment;
 import com.basemosama.fnhelper.fragments.CosmeticsListFragment;
 import com.basemosama.fnhelper.fragments.FavoriteListFragment;
@@ -33,19 +29,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FragmentManager fragmentManager;
     private BottomNavigationView bottomNavigationView;
     private DrawerLayout drawer;
-    int currentFragment=1;
+    int currentFragment = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState!=null)
-            currentFragment=savedInstanceState.getInt(Constant.CURRENT_FRAGMENT_BUNDLE_KEY);
+        if (savedInstanceState != null)
+            currentFragment = savedInstanceState.getInt(Constant.CURRENT_FRAGMENT_BUNDLE_KEY);
         setUpUi();
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -65,9 +62,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    public void replaceFragment(int whichFragment){
+    public void replaceFragment(int whichFragment) {
 
-        if(currentFragment!=whichFragment) {
+        if (currentFragment != whichFragment) {
 
 
             switch (whichFragment) {
@@ -111,14 +108,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             .commit();
                     break;
             }
-        currentFragment=whichFragment;
+            currentFragment = whichFragment;
 
 
         }
     }
 
-    private void setUpUi(){
-        Toolbar toolbar =  findViewById(R.id.toolbar);
+    private void setUpUi() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         MobileAds.initialize(this, getString(R.string.admob_app_id));
@@ -126,8 +123,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        fragmentManager=getSupportFragmentManager();
-        if(fragmentManager.getFragments().isEmpty()) {
+        fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getFragments().isEmpty()) {
             CosmeticsListFragment cosmeticsListFragment = new CosmeticsListFragment();
             fragmentManager.beginTransaction()
                     .add(R.id.fragment_container, cosmeticsListFragment)
@@ -136,27 +133,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setUpNavigationViews();
 
-         drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        Intent intent=getIntent();
-        if(intent.hasExtra(Constant.INTENT_MAIN_NAV_ID_KEY)){
-            int id=intent.getIntExtra(Constant.INTENT_MAIN_NAV_ID_KEY,R.id.nav_main);
+        Intent intent = getIntent();
+        if (intent.hasExtra(Constant.INTENT_MAIN_NAV_ID_KEY)) {
+            int id = intent.getIntExtra(Constant.INTENT_MAIN_NAV_ID_KEY, R.id.nav_main);
             handleNavigationClick(id);
         }
 
 
-
-
     }
-    private void setUpNavigationViews(){
-        final NavigationView navigationView =  findViewById(R.id.nav_view);
+
+    private void setUpNavigationViews() {
+        final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        bottomNavigationView=findViewById(R.id.bottom_nav_view);
+        bottomNavigationView = findViewById(R.id.bottom_nav_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -189,7 +185,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
     }
-    public void  handleNavigationClick(int id){
+
+    public void handleNavigationClick(int id) {
         if (id == R.id.nav_main) {
             replaceFragment(1);
             bottomNavigationView.setSelectedItemId(R.id.bottom_nav_cosmetics);
@@ -214,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             replaceFragment(5);
             bottomNavigationView.setSelectedItemId(R.id.bottom_nav_challenges);
 
-        }else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_share) {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             shareIntent.setType("text/plain");
@@ -228,10 +225,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(Constant.CURRENT_FRAGMENT_BUNDLE_KEY,currentFragment
+        outState.putInt(Constant.CURRENT_FRAGMENT_BUNDLE_KEY, currentFragment
         );
     }
-
 
 
 }
